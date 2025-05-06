@@ -107,6 +107,21 @@
       transform: translateY(-2px);
       box-shadow: 0 6px 16px rgba(44,168,179,0.4);
     }
+    .projects-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2rem;
+      margin-bottom: 4rem;
+    }
+    .card {
+      background: white;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.05);
+    }
+    .card h3 {
+      margin-top: 0;
+    }
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(10px); }
       to { opacity: 1; transform: translateY(0); }
@@ -145,6 +160,19 @@
       <div class="cta">
         <a href="#analytics" class="btn">Data & Analytics</a>
         <a href="#engineering" class="btn">Software Engineering</a>
+      </div>
+    </section>
+
+    <!-- New Analytics Section -->
+    <section id="analytics">
+      <h2>Data & Analytics Projects</h2>
+      <div class="projects-grid">
+        <div class="card">
+          <h3>Sales Analytics Explorer</h3>
+          <p>Interactive dashboard showcasing sales trends from the UCI Online Retail dataset.</p>
+          <a href="https://share.streamlit.io/EminaToric/sales-analytics/main/app.py" class="btn" target="_blank">Live Demo</a>
+          <a href="https://github.com/EminaToric/sales-analytics" class="btn" target="_blank">Source Code</a>
+        </div>
       </div>
     </section>
 
