@@ -59,7 +59,7 @@
       background: linear-gradient(135deg, #e0f7fa 0%, #ffffff 100%);
       border-radius: 12px;
       box-shadow: 0 8px 24px rgba(0,0,0,0.05);
-      margin-bottom: 4rem;
+      margin-bottom: 2rem;
       position: relative;
       overflow: hidden;
     }
@@ -122,10 +122,6 @@
     .card h3 {
       margin-top: 0;
     }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
     footer {
       text-align: center;
       border-top: 1px solid #eaeaea;
@@ -135,6 +131,10 @@
     }
     footer a { color: #2ca8b3; text-decoration: none; }
     footer a:hover { text-decoration: underline; }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
     @media (max-width: 600px) {
       header { flex-direction: column; align-items: flex-start; }
       nav { margin-top: 0.5rem; }
@@ -148,8 +148,8 @@
     <header>
       <div class="logo">Emina Toric</div>
       <nav>
-        <a href="#analytics">Data & Analytics</a>
-        <a href="#engineering">Engineering</a>
+        <a href="#analytics" id="nav-analytics">Data & Analytics</a>
+        <a href="#engineering" id="nav-engineering">Engineering</a>
         <a href="#contact">Contact</a>
       </nav>
     </header>
@@ -158,27 +158,64 @@
       <h1>Hi, I'm Emina</h1>
       <p>Data Scientist & Software Engineer</p>
       <div class="cta">
-        <a href="#analytics" class="btn">Data & Analytics</a>
-        <a href="#engineering" class="btn">Software Engineering</a>
+        <a href="#analytics" class="btn" id="btn-analytics">Data & Analytics</a>
+        <a href="#engineering" class="btn" id="btn-engineering">Software Engineering</a>
       </div>
     </section>
 
-    <!-- New Analytics Section -->
-    <section id="analytics">
-      <h2>Data & Analytics Projects</h2>
-      <div class="projects-grid">
-        <div class="card">
-          <h3>Sales Analytics Explorer</h3>
-          <p>Interactive dashboard showcasing sales trends from the UCI Online Retail dataset.</p>
-          <a href="https://share.streamlit.io/EminaToric/sales-analytics/main/app.py" class="btn" target="_blank">Live Demo</a>
-          <a href="https://github.com/EminaToric/sales-analytics" class="btn" target="_blank">Source Code</a>
+    <div id="content-sections">
+      <section id="analytics-section" style="display: none;">
+        <h2>Data & Analytics Projects</h2>
+        <div class="projects-grid">
+          <div class="card">
+            <h3>Sales Analytics Explorer</h3>
+            <p>Interactive dashboard showcasing sales trends from the UCI Online Retail dataset.</p>
+            <a href="https://share.streamlit.io/EminaToric/sales-analytics/main/app.py" class="btn" target="_blank">Live Demo</a>
+            <a href="https://github.com/EminaToric/sales-analytics" class="btn" target="_blank">Source Code</a>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+
+      <section id="engineering-section" style="display: none;">
+        <h2>Software Engineering Projects</h2>
+        <div class="projects-grid">
+          <div class="card">
+            <h3>Coming Soon</h3>
+            <p>Stay tuned for upcoming engineering showcases.</p>
+          </div>
+        </div>
+      </section>
+    </div>
 
     <footer id="contact">
       <p>Contact: <a href="mailto:eminatoric@yahoo.com">eminatoric@yahoo.com</a></p>
     </footer>
   </div>
+
+  <script>
+    const showSection = (sectionId) => {
+      document.getElementById('analytics-section').style.display = 'none';
+      document.getElementById('engineering-section').style.display = 'none';
+      document.getElementById(sectionId).style.display = 'block';
+    };
+
+    document.getElementById('btn-analytics').addEventListener('click', () => {
+      showSection('analytics-section');
+    });
+
+    document.getElementById('btn-engineering').addEventListener('click', () => {
+      showSection('engineering-section');
+    });
+
+    document.getElementById('nav-analytics').addEventListener('click', (e) => {
+      e.preventDefault();
+      showSection('analytics-section');
+    });
+
+    document.getElementById('nav-engineering').addEventListener('click', (e) => {
+      e.preventDefault();
+      showSection('engineering-section');
+    });
+  </script>
 </body>
 </html>
