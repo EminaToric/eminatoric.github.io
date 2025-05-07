@@ -107,6 +107,19 @@
       transform: translateY(-2px);
       box-shadow: 0 6px 16px rgba(44,168,179,0.4);
     }
+    .project-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      justify-content: space-between;
+    }
+    .project {
+      background: #fff;
+      padding: 1.5rem;
+      border-radius: 10px;
+      flex: 1 1 calc(48% - 1rem);
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+    }
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(10px); }
       to { opacity: 1; transform: translateY(0); }
@@ -125,6 +138,7 @@
       nav { margin-top: 0.5rem; }
       .hero h1 { font-size: 2.25rem; }
       .hero p { font-size: 1.1rem; }
+      .project-grid { flex-direction: column; }
     }
   </style>
 </head>
@@ -150,19 +164,20 @@
 
     <section id="analytics">
       <h2>Data & Analytics Projects</h2>
+      <div class="project-grid">
+        <div class="project">
+          <h3>Sales Analytics – Revenue & Product Insights</h3>
+          <p>Explore sales revenue trends, top-performing products, and monthly metrics from online retail data. Built with Streamlit and Python.</p>
+          <a href="https://salesanalytics-et.streamlit.app/" class="btn" target="_blank">Live Demo</a>
+          <a href="https://github.com/EminaToric/sales-analytics" class="btn" target="_blank">Source Code</a>
+        </div>
 
-      <div style="background:#fff; padding:1.5rem; border-radius:10px; margin-top:1rem; box-shadow:0 2px 12px rgba(0,0,0,0.05);">
-        <h3 style="margin-bottom:0.5rem;">Sales Analytics – Revenue & Product Insights</h3>
-        <p>Explore sales revenue trends, top-performing products, and monthly metrics from online retail data. Built with Streamlit and Python.</p>
-        <a href="https://salesanalytics-et.streamlit.app/" class="btn" target="_blank">Live Demo</a>
-        <a href="https://github.com/EminaToric/sales-analytics" class="btn" target="_blank">Source Code</a>
-      </div>
-
-      <div style="background:#fff; padding:1.5rem; border-radius:10px; margin-top:2rem; box-shadow:0 2px 12px rgba(0,0,0,0.05);">
-        <h3 style="margin-bottom:0.5rem;">SegmentIQ – Customer Clustering</h3>
-        <p>Explore customer segments for EcoModa using KMeans clustering on income, age, and spending. Built with Gradio and deployed on Hugging Face Spaces.</p>
-        <a href="https://EmiTor-segmentiq.hf.space" class="btn" target="_blank">Live Demo</a>
-        <a href="https://github.com/EminaToric/customer-segmentation" class="btn" target="_blank">Source Code</a>
+        <div class="project">
+          <h3>SegmentIQ – Customer Clustering</h3>
+          <p>Explore customer segments for EcoModa using KMeans clustering on income, age, and spending. Built with Gradio and deployed on Hugging Face Spaces.</p>
+          <a href="https://EmiTor-segmentiq.hf.space" class="btn" target="_blank">Live Demo</a>
+          <a href="https://github.com/EminaToric/customer-segmentation" class="btn" target="_blank">Source Code</a>
+        </div>
       </div>
     </section>
 
