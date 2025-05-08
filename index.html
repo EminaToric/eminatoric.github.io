@@ -108,10 +108,11 @@
       box-shadow: 0 6px 16px rgba(44,168,179,0.4);
     }
     .project-grid {
-      display: flex;
+      display: none;
       flex-wrap: wrap;
       gap: 1.5rem;
       justify-content: space-between;
+      margin-top: 2rem;
     }
     .project {
       background: #fff;
@@ -141,13 +142,19 @@
       .project-grid { flex-direction: column; }
     }
   </style>
+  <script>
+    function toggleProjects(id) {
+      const grid = document.getElementById(id);
+      grid.style.display = grid.style.display === 'flex' ? 'none' : 'flex';
+    }
+  </script>
 </head>
 <body>
   <div class="container">
     <header>
       <div class="logo">Emina Toric</div>
       <nav>
-        <a href="#analytics">Data & Analytics</a>
+        <a href="#" onclick="toggleProjects('analytics-projects')">Data & Analytics</a>
         <a href="#engineering">Engineering</a>
         <a href="#contact">Contact</a>
       </nav>
@@ -157,27 +164,24 @@
       <h1>Hi, I'm Emina</h1>
       <p>Data Scientist & Software Engineer</p>
       <div class="cta">
-        <a href="#analytics" class="btn">Data & Analytics</a>
+        <a href="#" class="btn" onclick="toggleProjects('analytics-projects')">Data & Analytics</a>
         <a href="#engineering" class="btn">Software Engineering</a>
       </div>
     </section>
 
-    <section id="analytics">
-      <h2>Data & Analytics Projects</h2>
-      <div class="project-grid">
-        <div class="project">
-          <h3>Sales Analytics – Revenue & Product Insights</h3>
-          <p>Explore sales revenue trends, top-performing products, and monthly metrics from online retail data. Built with Streamlit and Python.</p>
-          <a href="https://salesanalytics-et.streamlit.app/" class="btn" target="_blank">Live Demo</a>
-          <a href="https://github.com/EminaToric/sales-analytics" class="btn" target="_blank">Source Code</a>
-        </div>
+    <section id="analytics-projects" class="project-grid">
+      <div class="project">
+        <h3>Sales Analytics – Revenue & Product Insights</h3>
+        <p>Explore sales revenue trends, top-performing products, and monthly metrics from online retail data. Built with Streamlit and Python.</p>
+        <a href="https://salesanalytics-et.streamlit.app/" class="btn" target="_blank">Live Demo</a>
+        <a href="https://github.com/EminaToric/sales-analytics" class="btn" target="_blank">Source Code</a>
+      </div>
 
-        <div class="project">
-          <h3>SegmentIQ – Customer Clustering</h3>
-          <p>Explore customer segments for EcoModa using KMeans clustering on income, age, and spending. Built with Gradio and deployed on Hugging Face Spaces.</p>
-          <a href="https://EmiTor-segmentiq.hf.space" class="btn" target="_blank">Live Demo</a>
-          <a href="https://github.com/EminaToric/customer-segmentation" class="btn" target="_blank">Source Code</a>
-        </div>
+      <div class="project">
+        <h3>SegmentIQ – Customer Clustering</h3>
+        <p>Explore customer segments for EcoModa using KMeans clustering on income, age, and spending. Built with Gradio and deployed on Hugging Face Spaces.</p>
+        <a href="https://EmiTor-segmentiq.hf.space" class="btn" target="_blank">Live Demo</a>
+        <a href="https://github.com/EminaToric/customer-segmentation" class="btn" target="_blank">Source Code</a>
       </div>
     </section>
 
