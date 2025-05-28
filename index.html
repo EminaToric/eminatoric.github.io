@@ -3,201 +3,122 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Emina Toric – Portfolio</title>
+  <title>Emina Toric | Data & Software Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet" />
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap');
     body {
+      font-family: 'Space Grotesk', sans-serif;
       margin: 0;
-      font-family: system-ui, sans-serif;
-      background: #f9f9f9;
-      color: #333;
-    }
-    .container {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 2rem 1rem;
+      padding: 0;
+      background: #fdfdfd;
+      color: #1a1a1a;
     }
     header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1rem 0;
-      border-bottom: 2px solid #eaeaea;
-    }
-    .logo {
-      font-family: 'Playfair Display', serif;
-      font-weight: 700;
-      font-size: 1.75rem;
-      color: #2ca8b3;
-    }
-    nav a {
-      margin-left: 1.5rem;
-      text-decoration: none;
-      color: #555;
-      position: relative;
-      padding-bottom: 0.25rem;
-    }
-    nav a:hover {
-      color: #000;
-    }
-    nav a::after {
-      content: '';
-      position: absolute;
-      width: 0;
-      height: 2px;
-      bottom: -2px;
-      left: 0;
-      background: #2ca8b3;
-      transition: width 0.3s;
-    }
-    nav a:hover::after {
-      width: 100%;
-    }
-    .hero {
+      padding: 2rem;
       text-align: center;
-      padding: 6rem 0;
-      background: linear-gradient(135deg, #e0f7fa 0%, #ffffff 100%);
-      border-radius: 12px;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.05);
-      margin-bottom: 4rem;
-      position: relative;
-      overflow: hidden;
+      background: #ffffff;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
     }
-    .hero::before {
-      content: '';
-      position: absolute;
-      width: 200%;
-      height: 200%;
-      background: radial-gradient(circle at top left, rgba(44,168,179,0.2), transparent 50%);
-      top: -50%;
-      left: -50%;
-      transform: rotate(30deg);
-    }
-    .hero h1 {
-      position: relative;
-      font-size: 3rem;
+    header h1 {
       margin: 0;
-      line-height: 1.2;
-      color: #00796b;
-      animation: fadeIn 1s ease-out;
+      font-size: 2.5rem;
     }
-    .hero p {
-      position: relative;
-      margin-top: 1rem;
-      font-size: 1.25rem;
-      color: #555;
-    }
-    .cta {
-      position: relative;
-      margin-top: 2.5rem;
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 1rem;
-    }
-    .btn {
-      display: inline-block;
-      padding: 0.75rem 1.75rem;
-      background: #2ca8b3;
-      color: white;
+    header nav a {
+      margin: 0 1rem;
       text-decoration: none;
-      border-radius: 0.5rem;
-      font-weight: 600;
-      box-shadow: 0 4px 12px rgba(44,168,179,0.3);
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
-    .btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 16px rgba(44,168,179,0.4);
-    }
-    .project-grid {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1.5rem;
-      justify-content: space-between;
-      margin-top: 2rem;
-    }
-    .project {
-      background: #fff;
-      padding: 1.5rem;
-      border-radius: 10px;
-      flex: 1 1 calc(48% - 1rem);
-      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+      color: #1a1a1a;
+      font-weight: 500;
     }
     section {
-      padding-top: 3rem;
-      scroll-margin-top: 4rem;
+      padding: 3rem 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
     }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+    .project-card {
+      background: #fff;
+      border: 1px solid #eee;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.04);
+      transition: transform 0.2s ease-in-out;
+    }
+    .project-card:hover {
+      transform: translateY(-5px);
+    }
+    .project-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+    .project-card .content {
+      padding: 1.5rem;
+    }
+    .project-card h3 {
+      margin-top: 0;
+    }
+    .project-card p {
+      font-size: 0.95rem;
+    }
+    .project-card a.button {
+      display: inline-block;
+      margin-top: 1rem;
+      padding: 0.6rem 1.2rem;
+      background-color: #000;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 5px;
+      font-size: 0.9rem;
     }
     footer {
       text-align: center;
-      border-top: 1px solid #eaeaea;
-      padding: 2rem 0;
-      font-size: 0.875rem;
-      color: #777;
-    }
-    footer a { color: #2ca8b3; text-decoration: none; }
-    footer a:hover { text-decoration: underline; }
-    @media (max-width: 600px) {
-      header { flex-direction: column; align-items: flex-start; }
-      nav { margin-top: 0.5rem; }
-      .hero h1 { font-size: 2.25rem; }
-      .hero p { font-size: 1.1rem; }
-      .project-grid { flex-direction: column; }
-      .cta { flex-direction: column; align-items: center; }
+      padding: 2rem;
+      font-size: 0.85rem;
+      color: #888;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <header>
-      <div class="logo">Emina Toric</div>
-      <nav>
-        <a href="#analytics-projects">Data & Analytics</a>
-        <a href="#engineering">Engineering</a>
-        <a href="#contact">Contact</a>
-      </nav>
-    </header>
+  <header>
+    <h1>Emina Toric</h1>
+    <nav>
+      <a href="#projects">Data & Analytics</a>
+    </nav>
+  </header>
 
-    <section class="hero">
-      <h1>Hi, I'm Emina</h1>
-      <p>Data Scientist & Software Engineer</p>
-      <div class="cta">
-        <a href="#analytics-projects" class="btn">Data & Analytics</a>
-        <a href="#engineering" class="btn">Software Engineering</a>
-      </div>
-    </section>
+  <section id="projects">
+    <h2>Portfolio Projects</h2>
+    <div class="projects-grid">
 
-    <section id="analytics-projects">
-      <h2>Data & Analytics Projects</h2>
-      <div class="project-grid">
-        <div class="project">
-          <h3>Sales Analytics – Revenue & Product Insights</h3>
-          <p>Explore sales revenue trends, top-performing products, and monthly metrics from online retail data. Built with Streamlit and Python.</p>
-          <a href="https://salesanalytics-et.streamlit.app/" class="btn" target="_blank">Live Demo</a>
-          <a href="https://github.com/EminaToric/sales-analytics" class="btn" target="_blank">Source Code</a>
-        </div>
-
-        <div class="project">
-          <h3>SegmentIQ – Customer Clustering</h3>
-          <p>Explore customer segments for EcoModa using KMeans clustering on income, age, and spending. Built with Gradio and deployed on Hugging Face Spaces.</p>
-          <a href="https://EmiTor-segmentiq.hf.space" class="btn" target="_blank">Live Demo</a>
-          <a href="https://github.com/EminaToric/customer-segmentation" class="btn" target="_blank">Source Code</a>
+      <div class="project-card">
+        <img src="images/sales_dashboard.png" alt="Sales Dashboard">
+        <div class="content">
+          <h3>Sales Analytics Dashboard</h3>
+          <p>An interactive Streamlit dashboard exploring sales trends and revenue insights from the UK retail dataset.</p>
+          <a class="button" href="https://salesanalytics-et.streamlit.app/" target="_blank">Live Demo</a>
+          <a class="button" href="https://github.com/EminaToric/sales-analytics" target="_blank">GitHub</a>
         </div>
       </div>
-    </section>
 
-    <section id="engineering">
-      <h2>Software Engineering Projects</h2>
-      <p>Coming soon...</p>
-    </section>
+      <div class="project-card">
+        <img src="images/segmentiq.png" alt="Customer Segmentation">
+        <div class="content">
+          <h3>SegmentIQ - Customer Segmentation</h3>
+          <p>Used clustering algorithms to segment customers by behavior and spending patterns. Built with Gradio.</p>
+          <a class="button" href="https://huggingface.co/spaces/EmiTor/segmentiq" target="_blank">Live Demo</a>
+          <a class="button" href="https://github.com/EminaToric/segmentiq" target="_blank">GitHub</a>
+        </div>
+      </div>
 
-    <footer id="contact">
-      <p>Contact: <a href="mailto:eminatoric@yahoo.com">eminatoric@yahoo.com</a></p>
-    </footer>
-  </div>
+    </div>
+  </section>
+
+  <footer>
+    &copy; 2025 Emina Toric. All rights reserved.
+  </footer>
 </body>
 </html>
