@@ -5,12 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Emina Toric | Portfolio</title>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <style>
     body {
       font-family: 'Space Grotesk', sans-serif;
       margin: 0;
       padding: 0;
-      background: #fdfdfd;
+      background: radial-gradient(circle at top left, #fffce0, #fff7d1, #fdfdfd);
       color: #1a1a1a;
     }
     header {
@@ -62,7 +63,7 @@
       margin-top: 1rem;
       margin-right: 0.5rem;
       padding: 0.6rem 1.2rem;
-      background-color: #a03c3c; /* maroon */
+      background-color: rgba(160, 60, 60, 0.85); /* semi-transparent maroon */
       color: #fff;
       text-decoration: none;
       border-radius: 5px;
@@ -70,7 +71,10 @@
       transition: background-color 0.3s ease;
     }
     .project-card a.button:hover {
-      background-color: #800000; /* darker maroon on hover */
+      background-color: rgba(128, 0, 0, 0.9); /* darker maroon */
+    }
+    .project-card a.button i {
+      margin-right: 0.4rem;
     }
     footer {
       text-align: center;
@@ -94,8 +98,8 @@
         <div class="content">
           <h3>Sales Analytics Dashboard</h3>
           <p>An interactive Streamlit dashboard exploring sales trends and revenue insights from the UK retail dataset.</p>
-          <a class="button" href="https://salesanalytics-et.streamlit.app/" target="_blank">Live Demo</a>
-          <a class="button" href="https://github.com/EminaToric/sales-analytics" target="_blank">GitHub</a>
+          <a class="button" href="https://salesanalytics-et.streamlit.app/" target="_blank"><i class="fas fa-play"></i>Live Demo</a>
+          <a class="button" href="https://github.com/EminaToric/sales-analytics" target="_blank"><i class="fas fa-code"></i>GitHub</a>
         </div>
       </div>
 
@@ -103,8 +107,8 @@
         <div class="content">
           <h3>SegmentIQ - Customer Segmentation</h3>
           <p>Used clustering algorithms to segment customers by behavior and spending patterns. Built with Gradio.</p>
-          <a class="button" href="https://huggingface.co/spaces/EmiTor/segmentiq" target="_blank">Live Demo</a>
-          <a class="button" href="https://github.com/EminaToric/segmentiq" target="_blank">GitHub</a>
+          <a class="button" href="https://huggingface.co/spaces/EmiTor/segmentiq" target="_blank"><i class="fas fa-play"></i>Live Demo</a>
+          <a class="button" href="https://github.com/EminaToric/segmentiq" target="_blank"><i class="fas fa-code"></i>GitHub</a>
         </div>
       </div>
 
