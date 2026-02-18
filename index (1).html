@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Emina Toric — Healthcare Data & AI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Lato:ital,wght@0,300;0,400;0,700;1,300;1,400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0F0E0C;
+      --bg2: #181612;
+      --bg3: #1F1D18;
+      --gold: #C9A84C;
+      --gold-light: #E2C97E;
+      --gold-pale: rgba(201,168,76,0.12);
+      --white: #F5F0E8;
+      --muted: rgba(245,240,232,0.55);
+      --border: rgba(245,240,232,0.1);
+      --teal: #4AADA0;
+      --teal-pale: rgba(74,173,160,0.12);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Lato', sans-serif;
+      background: var(--bg);
+      color: var(--white);
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed; inset: 0; z-index: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      opacity: 0.4;
+    }
+
+    * { position: relative; z-index: 1; }
+
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.5rem 4rem;
+      background: rgba(15,14,12,0.88);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      color: var(--white);
+      text-decoration: none;
+    }
+    .nav-logo span { color: var(--gold); }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a {
+      text-decoration: none;
+      color: var(--muted);
+      font-size: 0.8rem;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--gold); }
+
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 10rem 4rem 6rem;
+      max-width: 1100px;
+    }
+    .hero-pre {
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 2rem;
+      opacity: 0;
+      animation: fadeUp 1s ease forwards 0.2s;
+    }
+    .hero-name {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(4rem, 9vw, 8rem);
+      line-height: 1.0;
+      color: var(--white);
+      margin-bottom: 2rem;
+      opacity: 0;
+      animation: fadeUp 1s ease forwards 0.4s;
+    }
+    .hero-name em { font-style: italic; color: var(--gold); }
+    .hero-intro {
+      font-size: clamp(1.05rem, 2vw, 1.3rem);
+      line-height: 1.85;
+      color: var(--muted);
+      max-width: 680px;
+      font-weight: 300;
+      margin-bottom: 3.5rem;
+      opacity: 0;
+      animation: fadeUp 1s ease forwards 0.6s;
+    }
+    .hero-intro strong { color: var(--white); font-weight: 400; }
+    .hero-ctas {
+      display: flex; gap: 1.25rem; flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeUp 1s ease forwards 0.8s;
+    }
+    .btn {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      padding: 1rem 2rem;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: 1px;
+      transition: all 0.25s;
+    }
+    .btn-gold { background: var(--gold); color: var(--bg); }
+    .btn-gold:hover { background: var(--gold-light); transform: translateY(-2px); }
+    .btn-outline { border: 1px solid var(--border); color: var(--muted); }
+    .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+
+    .scroll-hint {
+      position: absolute; bottom: 3rem; left: 4rem;
+      display: flex; align-items: center; gap: 1rem;
+      font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--muted);
+      opacity: 0;
+      animation: fadeUp 1s ease forwards 1.2s;
+    }
+    .scroll-line {
+      width: 40px; height: 1px;
+      background: var(--gold);
+      transform-origin: left;
+      transform: scaleX(0);
+      animation: expandLine 1.5s ease forwards 1.5s;
+    }
+    @keyframes expandLine { to { transform: scaleX(1); } }
+
+    section { padding: 8rem 4rem; }
+    .eyebrow {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.25rem;
+    }
+    .heading {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.2rem, 4vw, 3.5rem);
+      line-height: 1.15;
+      color: var(--white);
+      margin-bottom: 1.75rem;
+    }
+    .heading em { font-style: italic; color: var(--gold); }
+    .body-text {
+      font-size: 1.05rem;
+      line-height: 1.85;
+      color: var(--muted);
+      font-weight: 300;
+      max-width: 620px;
+    }
+    .body-text strong { color: var(--white); font-weight: 400; }
+
+    .about {
+      background: var(--bg2);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: start;
+    }
+    .about-facts { display: flex; flex-direction: column; gap: 1.5rem; }
+    .fact {
+      padding: 2rem;
+      border: 1px solid var(--border);
+      background: var(--bg3);
+      border-radius: 2px;
+      transition: border-color 0.3s;
+    }
+    .fact:hover { border-color: var(--gold); }
+    .fact-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem;
+      color: var(--gold);
+      line-height: 1;
+      margin-bottom: 0.4rem;
+    }
+    .fact-label {
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.5rem;
+    }
+    .fact-desc {
+      font-size: 0.875rem;
+      color: var(--muted);
+      line-height: 1.65;
+      font-weight: 300;
+    }
+
+    .projects { background: var(--bg); }
+    .projects-top {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: end;
+      margin-bottom: 5rem;
+    }
+    .projects-note {
+      font-size: 1rem;
+      color: var(--muted);
+      line-height: 1.8;
+      font-weight: 300;
+      font-style: italic;
+    }
+    .project-list { display: flex; flex-direction: column; gap: 2px; }
+    .project-item {
+      display: grid;
+      grid-template-columns: 3rem 1fr auto;
+      align-items: start;
+      gap: 2rem;
+      padding: 2.75rem;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      transition: all 0.3s;
+    }
+    .project-item:hover { background: var(--bg3); border-color: rgba(201,168,76,0.35); }
+    .project-item:hover .p-arrow { color: var(--gold); transform: translate(4px, -4px); }
+    .p-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      color: var(--gold);
+      opacity: 0.45;
+      padding-top: 0.25rem;
+    }
+    .p-tags { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 0.75rem; }
+    .tag {
+      font-size: 0.62rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      font-weight: 700;
+      padding: 0.2rem 0.6rem;
+      border-radius: 1px;
+    }
+    .tag-ai { background: var(--teal-pale); color: var(--teal); }
+    .tag-sql { background: rgba(120,100,200,0.15); color: #A08FE0; }
+    .tag-bi { background: rgba(200,120,80,0.15); color: #E09060; }
+    .tag-ml { background: rgba(80,160,100,0.15); color: #70C088; }
+    .tag-fav { background: var(--gold-pale); color: var(--gold); }
+    .p-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      color: var(--white);
+      margin-bottom: 0.75rem;
+    }
+    .p-desc {
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.7;
+      font-weight: 300;
+      max-width: 560px;
+      margin-bottom: 1.25rem;
+    }
+    .p-techs { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+    .tech {
+      font-size: 0.68rem;
+      padding: 0.2rem 0.55rem;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      border-radius: 1px;
+    }
+    .p-links {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 0.75rem;
+      padding-top: 0.5rem;
+    }
+    .p-arrow {
+      font-size: 1.1rem;
+      color: var(--muted);
+      transition: all 0.25s;
+    }
+    .p-link {
+      font-size: 0.68rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(245,240,232,0.2);
+      padding-bottom: 1px;
+      transition: color 0.2s, border-color 0.2s;
+      white-space: nowrap;
+    }
+    .p-link:hover { color: var(--gold); border-color: var(--gold); }
+
+    .experience {
+      background: var(--bg2);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .exp-list { margin-top: 4rem; }
+    .exp-item {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 4rem;
+      padding: 3.5rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .exp-item:last-child { border-bottom: none; }
+    .exp-co {
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.6rem;
+    }
+    .exp-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.35rem;
+      color: var(--white);
+      margin-bottom: 0.5rem;
+      line-height: 1.3;
+    }
+    .exp-when { font-size: 0.8rem; color: var(--muted); font-weight: 300; }
+    .exp-badge {
+      display: inline-block;
+      margin-top: 0.75rem;
+      font-size: 0.62rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.25rem 0.6rem;
+      background: var(--gold-pale);
+      color: var(--gold);
+      border-radius: 1px;
+    }
+    .exp-story {
+      font-size: 0.95rem;
+      line-height: 1.85;
+      color: var(--muted);
+      font-weight: 300;
+      margin-bottom: 1.5rem;
+    }
+    .exp-story strong { color: var(--white); font-weight: 400; }
+    .exp-points { list-style: none; display: flex; flex-direction: column; gap: 0.8rem; }
+    .exp-points li {
+      font-size: 0.875rem;
+      color: var(--muted);
+      line-height: 1.65;
+      font-weight: 300;
+      padding-left: 1.5rem;
+      position: relative;
+    }
+    .exp-points li::before {
+      content: '◆';
+      position: absolute; left: 0;
+      color: var(--gold);
+      font-size: 0.4rem;
+      top: 0.45rem;
+    }
+
+    .skills { background: var(--bg); }
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      margin-top: 4rem;
+      border: 1px solid var(--border);
+      background: var(--border);
+    }
+    .skill-group {
+      padding: 2.5rem;
+      background: var(--bg2);
+    }
+    .sg-name {
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .skill-items { list-style: none; display: flex; flex-direction: column; gap: 0.75rem; }
+    .skill-items li { font-size: 0.875rem; color: var(--muted); font-weight: 300; }
+
+    .education {
+      background: var(--bg2);
+      border-top: 1px solid var(--border);
+    }
+    .edu-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-top: 4rem;
+    }
+    .edu-card {
+      padding: 2.5rem;
+      border: 1px solid var(--border);
+      background: var(--bg3);
+      transition: border-color 0.3s;
+    }
+    .edu-card:hover { border-color: rgba(201,168,76,0.4); }
+    .edu-icon { font-size: 2rem; margin-bottom: 1.25rem; }
+    .edu-degree {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      color: var(--white);
+      margin-bottom: 0.4rem;
+      line-height: 1.3;
+    }
+    .edu-field {
+      font-size: 0.72rem;
+      color: var(--gold);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+    }
+    .edu-school { font-size: 0.875rem; color: var(--muted); font-weight: 300; }
+    .edu-year { font-size: 0.775rem; color: var(--muted); margin-top: 0.3rem; font-style: italic; }
+
+    .contact {
+      background: var(--bg);
+      border-top: 1px solid var(--border);
+      text-align: center;
+      padding: 10rem 4rem;
+    }
+    .contact-heading {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.5rem, 5vw, 4.5rem);
+      line-height: 1.15;
+      color: var(--white);
+      margin-bottom: 1.5rem;
+    }
+    .contact-heading em { font-style: italic; color: var(--gold); }
+    .contact-sub {
+      font-size: 1.1rem;
+      color: var(--muted);
+      max-width: 520px;
+      margin: 0 auto 3.5rem;
+      line-height: 1.8;
+      font-weight: 300;
+    }
+    .contact-btns { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
+
+    footer {
+      padding: 2rem 4rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--bg);
+    }
+    .footer-logo { font-family: 'Playfair Display', serif; font-size: 0.95rem; color: var(--muted); }
+    .footer-status { display: flex; align-items: center; gap: 0.6rem; font-size: 0.75rem; color: var(--teal); }
+    .status-dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--teal);
+      animation: pulse 2.5s ease infinite;
+    }
+    .footer-copy { font-size: 0.75rem; color: var(--muted); font-weight: 300; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%       { opacity: 0.4; transform: scale(0.75); }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .reveal.visible { opacity: 1; transform: none; }
+    .d1 { transition-delay: 0.1s; }
+    .d2 { transition-delay: 0.2s; }
+    .d3 { transition-delay: 0.3s; }
+
+    @media (max-width: 960px) {
+      nav { padding: 1.25rem 1.5rem; }
+      .nav-links { gap: 1.5rem; }
+      section { padding: 5rem 1.5rem; }
+      .hero { padding: 8rem 1.5rem 5rem; }
+      .scroll-hint { display: none; }
+      .about { grid-template-columns: 1fr; gap: 3rem; }
+      .projects-top { grid-template-columns: 1fr; gap: 1.5rem; }
+      .project-item { grid-template-columns: 2rem 1fr; gap: 1rem; }
+      .p-links { display: none; }
+      .exp-item { grid-template-columns: 1fr; gap: 1.25rem; }
+      .skills-grid { grid-template-columns: 1fr 1fr; }
+      .edu-grid { grid-template-columns: 1fr; }
+      footer { flex-direction: column; gap: 1rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="#" class="nav-logo">Emina <span>Toric</span></a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#contact">Say hello</a></li>
+    </ul>
+  </nav>
+
+  <section class="hero" style="padding-top:0; max-width:100%;">
+    <p class="hero-pre">Healthcare data &amp; AI professional</p>
+    <h1 class="hero-name">Hi, I'm<br><em>Emina.</em></h1>
+    <p class="hero-intro">
+      I've spent over a decade helping two of America's biggest healthcare companies
+      make sense of their data and do right by the people behind it.
+      I recently finished my <strong>Master's in Computer Science</strong>, earned a
+      <strong>Generative AI certification</strong>, and built a real AI app from scratch
+      that combines everything I know and love. Now I'm bringing all of that to Europe.
+    </p>
+    <div class="hero-ctas">
+      <a href="#projects" class="btn btn-gold">See what I've built</a>
+      <a href="https://linkedin.com/in/emina-toric-msc" target="_blank" class="btn btn-outline">Connect on LinkedIn</a>
+    </div>
+    <div class="scroll-hint">
+      <div class="scroll-line"></div>
+      Scroll to explore
+    </div>
+  </section>
+
+  <section class="about" id="about">
+    <div class="reveal">
+      <p class="eyebrow">A little about me</p>
+      <h2 class="heading">Data is how I think.<br><em>People</em> are why I do it.</h2>
+      <p class="body-text" style="margin-bottom:1.5rem;">
+        My career has always lived at the intersection of complex systems and real human outcomes.
+        At Humana and UnitedHealth Group I worked with Medicare and Medicaid populations — the kind
+        of data work where the stakes actually matter.
+      </p>
+      <p class="body-text" style="margin-bottom:1.5rem;">
+        What makes me a little unusual is that I also hold a Master's in
+        <strong>Child and Human Development</strong>. So when I look at health data
+        I'm always thinking about the whole person, not just the claim.
+      </p>
+      <p class="body-text">
+        In 2025 I finished my <strong>MS in Computer Science</strong> and dove headfirst into
+        Generative AI. I'm now actively looking for opportunities in European healthtech where
+        I can bring this combination to work on something genuinely meaningful.
+      </p>
+    </div>
+    <div class="about-facts reveal d2">
+      <div class="fact">
+        <div class="fact-num">10+</div>
+        <div class="fact-label">Years in healthcare analytics</div>
+        <div class="fact-desc">The kind of experience that only comes from being inside the system long enough to understand how it actually works.</div>
+      </div>
+      <div class="fact">
+        <div class="fact-num">2</div>
+        <div class="fact-label">Master's degrees</div>
+        <div class="fact-desc">Computer Science and Child &amp; Human Development. A combination nobody else has and it shows in the work.</div>
+      </div>
+      <div class="fact">
+        <div class="fact-num">3+</div>
+        <div class="fact-label">Live AI projects</div>
+        <div class="fact-desc">Not mockups. Not case studies. Real apps, deployed and running, that you can use right now.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="projects" id="projects">
+    <div class="projects-top reveal">
+      <div>
+        <p class="eyebrow">What I've built</p>
+        <h2 class="heading">Real projects.<br><em>Real data.</em></h2>
+      </div>
+      <p class="projects-note">
+        Everything here is live and working. I believe the best way to show what you can do
+        is to actually do it — so each project here is something I built from scratch,
+        deployed, and can talk through in depth.
+      </p>
+    </div>
+
+    <div class="project-list reveal">
+
+      <div class="project-item">
+        <div class="p-num">01</div>
+        <div>
+          <div class="p-tags">
+            <span class="tag tag-fav">My favorite</span>
+            <span class="tag tag-ai">Generative AI</span>
+            <span class="tag tag-ai">Full stack</span>
+          </div>
+          <h3 class="p-name">HeartPlay</h3>
+          <p class="p-desc">
+            This one came from my heart and from both of my degrees. HeartPlay is an AI app that generates
+            creative, age-appropriate bonding activities for parents and children based on the child's age,
+            interests, and setting. I built it entirely myself with React on the front end and FastAPI in Python
+            on the back. It's the project I'm most proud of because it's genuinely useful to real families.
+          </p>
+          <div class="p-techs">
+            <span class="tech">React</span>
+            <span class="tech">FastAPI</span>
+            <span class="tech">Python</span>
+            <span class="tech">OpenAI GPT</span>
+            <span class="tech">Tailwind</span>
+            <span class="tech">Vercel</span>
+          </div>
+        </div>
+        <div class="p-links">
+          <span class="p-arrow">↗</span>
+          <a href="https://heart-play-frontend.vercel.app/" target="_blank" class="p-link">Live demo</a>
+          <a href="https://github.com/EminaToric/HeartPlay" target="_blank" class="p-link">GitHub</a>
+        </div>
+      </div>
+
+      <div class="project-item">
+        <div class="p-num">02</div>
+        <div>
+          <div class="p-tags">
+            <span class="tag tag-sql">SQL</span>
+            <span class="tag tag-sql">Snowflake</span>
+          </div>
+          <h3 class="p-name">Urban Mobility Analysis</h3>
+          <p class="p-desc">
+            A deep SQL analysis of NYC Citi Bike trip data built in Snowflake — the same tool I use day to day
+            professionally. I looked at which stations peak and when, how weekday commuters behave differently
+            from weekend riders, which corridors are underserved, and where the infrastructure gaps are.
+            The kind of work that would actually inform city planning decisions.
+          </p>
+          <div class="p-techs">
+            <span class="tech">Snowflake SQL</span>
+            <span class="tech">Window functions</span>
+            <span class="tech">CTEs</span>
+            <span class="tech">Temporal analysis</span>
+          </div>
+        </div>
+        <div class="p-links">
+          <span class="p-arrow">↗</span>
+          <a href="https://github.com/EminaToric/urban-mobility-sql" target="_blank" class="p-link">GitHub</a>
+        </div>
+      </div>
+
+      <div class="project-item">
+        <div class="p-num">03</div>
+        <div>
+          <div class="p-tags">
+            <span class="tag tag-bi">Analytics</span>
+            <span class="tag tag-bi">Dashboard</span>
+          </div>
+          <h3 class="p-name">Sales Analytics Dashboard</h3>
+          <p class="p-desc">
+            An interactive dashboard built with Streamlit to explore sales trends and revenue patterns from
+            UK retail data. Clean, fast, and built to actually be used rather than just looked at.
+            A good example of how I think about making data accessible to people who aren't analysts.
+          </p>
+          <div class="p-techs">
+            <span class="tech">Python</span>
+            <span class="tech">Streamlit</span>
+            <span class="tech">Pandas</span>
+            <span class="tech">Data visualization</span>
+          </div>
+        </div>
+        <div class="p-links">
+          <span class="p-arrow">↗</span>
+          <a href="https://salesanalytics-et.streamlit.app/" target="_blank" class="p-link">Live demo</a>
+          <a href="https://github.com/EminaToric/sales-analytics" target="_blank" class="p-link">GitHub</a>
+        </div>
+      </div>
+
+      <div class="project-item">
+        <div class="p-num">04</div>
+        <div>
+          <div class="p-tags">
+            <span class="tag tag-ml">Machine learning</span>
+          </div>
+          <h3 class="p-name">SegmentIQ</h3>
+          <p class="p-desc">
+            Customer segmentation using clustering algorithms to group people by how they actually behave,
+            not just demographics. Deployed as a Gradio app on Hugging Face so anyone can try it.
+            It's a practical demonstration of unsupervised machine learning that I can explain from
+            the math all the way up to the business insight.
+          </p>
+          <div class="p-techs">
+            <span class="tech">Python</span>
+            <span class="tech">Scikit-learn</span>
+            <span class="tech">Gradio</span>
+            <span class="tech">Hugging Face</span>
+            <span class="tech">K-Means</span>
+          </div>
+        </div>
+        <div class="p-links">
+          <span class="p-arrow">↗</span>
+          <a href="https://huggingface.co/spaces/EmiTor/segmentiq" target="_blank" class="p-link">Live demo</a>
+          <a href="https://github.com/EminaToric/segmentiq" target="_blank" class="p-link">GitHub</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="experience" id="experience">
+    <div class="reveal">
+      <p class="eyebrow">Where I've worked</p>
+      <h2 class="heading">A decade inside<br><em>American healthcare.</em></h2>
+    </div>
+    <div class="exp-list">
+
+      <div class="exp-item reveal">
+        <div>
+          <div class="exp-co">UnitedHealth Group</div>
+          <div class="exp-title">Economics Data Consultant</div>
+          <div class="exp-when">September 2021 to present</div>
+          <span class="exp-badge">Current role</span>
+        </div>
+        <div>
+          <p class="exp-story">
+            UnitedHealth Group is one of the largest health insurers in the world, and my role sits in the
+            economics and data consulting space. That means I'm working with <strong>large, complex healthcare
+            datasets</strong> to help the business understand what's driving costs, how programs are performing,
+            and where there are real opportunities to do better for members.
+          </p>
+          <ul class="exp-points">
+            <li>I dig into Medicare and Medicaid data to find cost drivers and program improvement opportunities that affect millions of members</li>
+            <li>I turn complicated economic and clinical data into clear stories that senior stakeholders can actually act on</li>
+            <li>I've been bringing AI and machine learning into my analytical work to go further and faster than traditional methods allow</li>
+            <li>I work fully remote across distributed teams which means I know how to collaborate across time zones and stay accountable without anyone looking over my shoulder</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="exp-item reveal">
+        <div>
+          <div class="exp-co">Humana</div>
+          <div class="exp-title">Data Consultant, Technology Analyst and Data Analyst</div>
+          <div class="exp-when">January 2013 to September 2021 — nearly 9 years</div>
+        </div>
+        <div>
+          <p class="exp-story">
+            I grew up professionally at Humana. I joined as a Data Analyst and over nearly a decade worked
+            through Technology Analyst and into Data Consultant — building deep expertise in
+            <strong>how healthcare data actually works</strong> at the operational, clinical, and strategic levels.
+          </p>
+          <ul class="exp-points">
+            <li>Built analytical frameworks to track health outcomes and program performance across large member populations</li>
+            <li>Partnered closely with clinical and operations teams and learned to translate between data people and non-data people</li>
+            <li>Spent time as a Technology Analyst bridging the data and IT worlds, which gave me a much richer understanding of how data systems work end to end</li>
+            <li>Developed the communication skills to present findings to audiences at every level of the organization</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="skills">
+    <div class="reveal">
+      <p class="eyebrow">What I work with</p>
+      <h2 class="heading">Skills &amp; tools</h2>
+    </div>
+    <div class="skills-grid reveal">
+      <div class="skill-group">
+        <div class="sg-name">Healthcare domain</div>
+        <ul class="skill-items">
+          <li>Medicare &amp; Medicaid programs</li>
+          <li>Claims data analysis</li>
+          <li>Population health</li>
+          <li>Health economics</li>
+          <li>Clinical data</li>
+          <li>Healthcare policy</li>
+        </ul>
+      </div>
+      <div class="skill-group">
+        <div class="sg-name">AI &amp; data science</div>
+        <ul class="skill-items">
+          <li>Generative AI &amp; LLMs</li>
+          <li>Prompt engineering</li>
+          <li>Machine learning</li>
+          <li>Clustering algorithms</li>
+          <li>Predictive modeling</li>
+          <li>NLP</li>
+        </ul>
+      </div>
+      <div class="skill-group">
+        <div class="sg-name">Technical stack</div>
+        <ul class="skill-items">
+          <li>Python &amp; SQL</li>
+          <li>Snowflake</li>
+          <li>React &amp; FastAPI</li>
+          <li>Streamlit &amp; Gradio</li>
+          <li>Tableau &amp; Power BI</li>
+          <li>OpenAI API</li>
+        </ul>
+      </div>
+      <div class="skill-group">
+        <div class="sg-name">How I work</div>
+        <ul class="skill-items">
+          <li>Data consulting</li>
+          <li>Stakeholder communication</li>
+          <li>Strategic analysis</li>
+          <li>Business intelligence</li>
+          <li>Remote collaboration</li>
+          <li>Cross-functional teamwork</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="education">
+    <div class="reveal">
+      <p class="eyebrow">Education &amp; credentials</p>
+      <h2 class="heading">What I studied</h2>
+    </div>
+    <div class="edu-grid reveal">
+      <div class="edu-card">
+        <div class="edu-icon">💻</div>
+        <div class="edu-degree">Master of Science</div>
+        <div class="edu-field">Computer Science</div>
+        <div class="edu-school">Georgia Southwestern State University</div>
+        <div class="edu-year">Completed December 2025</div>
+      </div>
+      <div class="edu-card">
+        <div class="edu-icon">🌱</div>
+        <div class="edu-degree">Master of Science</div>
+        <div class="edu-field">Child &amp; Human Development</div>
+        <div class="edu-school">Arizona State University</div>
+        <div class="edu-year">The degree that shapes everything else</div>
+      </div>
+      <div class="edu-card" style="border-color: rgba(201,168,76,0.3);">
+        <div class="edu-icon">🎓</div>
+        <div class="edu-degree">Generative AI with Large Language Models</div>
+        <div class="edu-field">Professional certification</div>
+        <div class="edu-school">DeepLearning.AI</div>
+        <div class="edu-year">Issued July 2025</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact" id="contact">
+    <h2 class="contact-heading reveal">Let's work on<br>something <em>good.</em></h2>
+    <p class="contact-sub reveal d1">
+      I'm looking for roles in European healthtech, digital health, and health analytics.
+      If you're building something that actually matters to people, I'd love to hear about it.
+    </p>
+    <div class="contact-btns reveal d2">
+      <a href="https://linkedin.com/in/emina-toric-msc" target="_blank" class="btn btn-gold">Connect on LinkedIn</a>
+      <a href="https://github.com/EminaToric" target="_blank" class="btn btn-outline">See my GitHub</a>
+      <a href="https://heart-play-frontend.vercel.app/" target="_blank" class="btn btn-outline">Try HeartPlay</a>
+    </div>
+  </section>
+
+  <footer>
+    <span class="footer-logo">Emina Toric</span>
+    <div class="footer-status">
+      <div class="status-dot"></div>
+      Open to European opportunities in 2026
+    </div>
+    <span class="footer-copy">© 2025 Emina Toric</span>
+  </footer>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.08 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>
