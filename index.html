@@ -3,129 +3,940 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Emina Toric | Portfolio</title>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <title>Emina Toric — Healthcare Data & AI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
   <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream: #F5F0E8;
+      --warm-white: #FAF7F2;
+      --ink: #1A1612;
+      --ink-light: #4A3F35;
+      --teal: #2D7A6E;
+      --teal-light: #3D9A8A;
+      --teal-pale: #E8F4F2;
+      --rust: #C4622D;
+      --rust-pale: #FAF0EA;
+      --gold: #C4952D;
+      --border: #DDD5C8;
+    }
+
+    html { scroll-behavior: smooth; }
+
     body {
-      font-family: 'Space Grotesk', sans-serif;
-      margin: 0;
-      padding: 0;
-      background: radial-gradient(circle at top left, #fffce0, #ffefd1, #fdfdfd);
-      color: #1a1a1a;
+      font-family: 'DM Sans', sans-serif;
+      background: var(--cream);
+      color: var(--ink);
+      overflow-x: hidden;
     }
-    header {
-      padding: 4rem 2rem 2rem;
-      text-align: center;
-      background: #fffce0, #ffefd1, #fdfdfd;
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.25rem 3rem;
+      background: rgba(245, 240, 232, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
     }
-    header h1 {
-      margin: 0;
-      font-size: 3rem;
+    .nav-logo {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.1rem;
+      color: var(--ink);
+      text-decoration: none;
+      letter-spacing: 0.01em;
     }
-    header p {
-      font-size: 1.25rem;
-      color: #555;
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      text-decoration: none;
+      color: var(--ink-light);
+      font-size: 0.875rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--teal); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      padding-top: 5rem;
+    }
+    .hero-left {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 5rem 4rem 5rem 5rem;
+      position: relative;
+    }
+    .hero-left::after {
+      content: '';
+      position: absolute; top: 0; right: 0; bottom: 0;
+      width: 1px;
+      background: linear-gradient(to bottom, transparent, var(--border) 20%, var(--border) 80%, transparent);
+    }
+    .hero-eyebrow {
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--teal);
+      font-weight: 500;
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards 0.2s;
+    }
+    .hero-name {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(3.5rem, 6vw, 5.5rem);
+      line-height: 1.05;
+      color: var(--ink);
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards 0.35s;
+    }
+    .hero-name em {
+      font-style: italic;
+      color: var(--teal);
+    }
+    .hero-tagline {
+      font-size: 1.15rem;
+      line-height: 1.7;
+      color: var(--ink-light);
+      max-width: 480px;
+      margin-bottom: 3rem;
+      font-weight: 300;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards 0.5s;
+    }
+    .hero-ctas {
+      display: flex; gap: 1rem; flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards 0.65s;
+    }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.875rem 1.75rem;
+      background: var(--teal);
+      color: white;
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 500;
+      letter-spacing: 0.03em;
+      border-radius: 2px;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .btn-primary:hover { background: var(--teal-light); transform: translateY(-1px); }
+    .btn-secondary {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.875rem 1.75rem;
+      border: 1.5px solid var(--border);
+      color: var(--ink);
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 500;
+      letter-spacing: 0.03em;
+      border-radius: 2px;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .btn-secondary:hover { border-color: var(--teal); color: var(--teal); }
+
+    .hero-right {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 5rem 5rem 5rem 4rem;
+      gap: 1.5rem;
+    }
+    .stat-card {
+      padding: 1.75rem 2rem;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      background: var(--warm-white);
+      opacity: 0;
+      animation: fadeLeft 0.8s ease forwards;
+    }
+    .stat-card:nth-child(1) { animation-delay: 0.5s; }
+    .stat-card:nth-child(2) { animation-delay: 0.65s; }
+    .stat-card:nth-child(3) { animation-delay: 0.8s; }
+    .stat-number {
+      font-family: 'DM Serif Display', serif;
+      font-size: 2.75rem;
+      color: var(--teal);
+      line-height: 1;
+      margin-bottom: 0.4rem;
+    }
+    .stat-label {
+      font-size: 0.8rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink-light);
+      font-weight: 500;
+    }
+    .stat-detail {
+      font-size: 0.9rem;
+      color: var(--ink-light);
       margin-top: 0.5rem;
+      font-weight: 300;
+      line-height: 1.5;
     }
-    section {
-      padding: 3rem 2rem;
-      max-width: 1200px;
-      margin: 0 auto;
+
+    /* ── SECTION SHARED ── */
+    section { padding: 7rem 5rem; }
+    .section-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--teal);
+      font-weight: 500;
+      margin-bottom: 1rem;
+    }
+    .section-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      line-height: 1.15;
+      color: var(--ink);
+      margin-bottom: 1.5rem;
+    }
+    .section-intro {
+      font-size: 1.05rem;
+      color: var(--ink-light);
+      line-height: 1.75;
+      font-weight: 300;
+      max-width: 640px;
+    }
+
+    /* ── ABOUT ── */
+    .about {
+      background: var(--ink);
+      color: white;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: center;
+    }
+    .about .section-label { color: var(--teal-light); }
+    .about .section-title { color: white; }
+    .about .section-intro { color: rgba(255,255,255,0.7); max-width: 100%; }
+    .about-right { display: flex; flex-direction: column; gap: 1.5rem; }
+    .about-pill {
+      display: flex; align-items: flex-start; gap: 1rem;
+      padding: 1.5rem;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 4px;
+    }
+    .about-pill-icon {
+      font-size: 1.5rem;
+      flex-shrink: 0;
+      margin-top: 0.1rem;
+    }
+    .about-pill-title {
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--teal-light);
+      margin-bottom: 0.4rem;
+    }
+    .about-pill-text {
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.65);
+      line-height: 1.6;
+      font-weight: 300;
+    }
+
+    /* ── PROJECTS ── */
+    .projects { background: var(--warm-white); }
+    .projects-header {
+      display: flex; justify-content: space-between; align-items: flex-end;
+      margin-bottom: 4rem;
     }
     .projects-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 2rem;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
     }
     .project-card {
-      background: linear-gradient(135deg, #fffde7, #fff9c4);
-      border: 1px solid #eee;
-      border-radius: 10px;
+      background: var(--cream);
+      border: 1px solid var(--border);
+      border-radius: 4px;
       overflow: hidden;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.04);
-      transition: transform 0.2s ease-in-out;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.25s, box-shadow 0.25s;
     }
     .project-card:hover {
-      transform: translateY(-5px);
+      transform: translateY(-4px);
+      box-shadow: 0 16px 40px rgba(26,22,18,0.1);
     }
-    .project-card .content {
-      padding: 1.5rem;
+    .project-card.featured {
+      grid-column: span 2;
+      flex-direction: row;
     }
-    .project-card h3 {
-      margin-top: 0;
+    .project-visual {
+      height: 200px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 4rem;
+      flex-shrink: 0;
     }
-    .project-card p {
-      font-size: 0.95rem;
+    .project-card.featured .project-visual {
+      width: 260px;
+      height: auto;
     }
-    .project-card a.button {
+    .project-visual.heartplay { background: linear-gradient(135deg, #FFE4E8 0%, #FFB3C1 100%); }
+    .project-visual.sales { background: linear-gradient(135deg, #E4F0FF 0%, #B3CFFF 100%); }
+    .project-visual.segment { background: linear-gradient(135deg, #E4FFE8 0%, #B3F0BB 100%); }
+    .project-body { padding: 2rem; flex: 1; display: flex; flex-direction: column; }
+    .project-tag {
       display: inline-block;
-      margin-top: 1rem;
-      margin-right: 0.5rem;
-      padding: 0.6rem 1.2rem;
-      background-color: rgba(160, 60, 60, 0.85); /* semi-transparent maroon */
-      color: #fff;
-      text-decoration: none;
-      border-radius: 5px;
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-weight: 600;
+      padding: 0.3rem 0.75rem;
+      border-radius: 2px;
+      margin-bottom: 1rem;
+      align-self: flex-start;
+    }
+    .tag-ai { background: var(--teal-pale); color: var(--teal); }
+    .tag-analytics { background: #EEF0FF; color: #4A52C4; }
+    .tag-ml { background: #F0FFE4; color: #3A7A2A; }
+    .project-name {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.5rem;
+      margin-bottom: 0.75rem;
+      color: var(--ink);
+    }
+    .project-desc {
       font-size: 0.9rem;
-      transition: background-color 0.3s ease;
+      color: var(--ink-light);
+      line-height: 1.65;
+      font-weight: 300;
+      flex: 1;
+      margin-bottom: 1.5rem;
     }
-    .project-card a.button:hover {
-      background-color: rgba(128, 0, 0, 0.9); /* darker maroon */
+    .project-tech {
+      display: flex; flex-wrap: wrap; gap: 0.5rem;
+      margin-bottom: 1.5rem;
     }
-    .project-card a.button i {
-      margin-right: 0.4rem;
+    .tech-badge {
+      font-size: 0.7rem;
+      padding: 0.25rem 0.6rem;
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      color: var(--ink-light);
+      font-weight: 500;
+      letter-spacing: 0.03em;
     }
-    footer {
+    .project-links { display: flex; gap: 1rem; }
+    .project-link {
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--teal);
+      text-decoration: none;
+      border-bottom: 1px solid var(--teal);
+      padding-bottom: 1px;
+      transition: opacity 0.2s;
+    }
+    .project-link:hover { opacity: 0.7; }
+    .project-link.github { color: var(--ink-light); border-color: var(--ink-light); }
+
+    /* ── EXPERIENCE ── */
+    .experience { background: var(--cream); }
+    .exp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 4rem; }
+    .exp-card {
+      padding: 2.5rem;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      background: var(--warm-white);
+      position: relative;
+    }
+    .exp-card.current { border-color: var(--teal); }
+    .exp-current-badge {
+      position: absolute; top: 1.5rem; right: 1.5rem;
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      font-weight: 600;
+      padding: 0.25rem 0.6rem;
+      background: var(--teal-pale);
+      color: var(--teal);
+      border-radius: 2px;
+    }
+    .exp-company {
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--teal);
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+    .exp-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.4rem;
+      color: var(--ink);
+      margin-bottom: 0.4rem;
+    }
+    .exp-duration {
+      font-size: 0.8rem;
+      color: var(--ink-light);
+      margin-bottom: 1.5rem;
+      font-weight: 300;
+    }
+    .exp-bullets { list-style: none; display: flex; flex-direction: column; gap: 0.75rem; }
+    .exp-bullets li {
+      font-size: 0.875rem;
+      color: var(--ink-light);
+      line-height: 1.6;
+      padding-left: 1.25rem;
+      position: relative;
+      font-weight: 300;
+    }
+    .exp-bullets li::before {
+      content: '→';
+      position: absolute; left: 0;
+      color: var(--teal);
+      font-size: 0.75rem;
+      top: 0.05rem;
+    }
+
+    /* ── SKILLS ── */
+    .skills { background: var(--ink); padding: 7rem 5rem; }
+    .skills .section-label { color: var(--teal-light); }
+    .skills .section-title { color: white; margin-bottom: 4rem; }
+    .skills-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; }
+    .skill-group-title {
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--teal-light);
+      font-weight: 600;
+      margin-bottom: 1.25rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    .skill-list { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+    .skill-list li {
+      font-size: 0.875rem;
+      color: rgba(255,255,255,0.65);
+      font-weight: 300;
+      line-height: 1.4;
+    }
+
+    /* ── EDUCATION ── */
+    .education { background: var(--warm-white); }
+    .edu-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 4rem; }
+    .edu-card {
+      padding: 2.5rem;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      background: var(--cream);
+    }
+    .edu-degree {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.2rem;
+      color: var(--ink);
+      margin-bottom: 0.4rem;
+      line-height: 1.3;
+    }
+    .edu-field {
+      font-size: 0.8rem;
+      color: var(--teal);
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.75rem;
+    }
+    .edu-school {
+      font-size: 0.875rem;
+      color: var(--ink-light);
+      font-weight: 300;
+    }
+    .edu-year {
+      font-size: 0.75rem;
+      color: var(--ink-light);
+      margin-top: 0.3rem;
+    }
+    .cert-card {
+      padding: 2.5rem;
+      border: 1px solid var(--teal);
+      border-radius: 4px;
+      background: var(--teal-pale);
+    }
+    .cert-icon { font-size: 2rem; margin-bottom: 1rem; }
+    .cert-name {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.2rem;
+      color: var(--ink);
+      margin-bottom: 0.4rem;
+    }
+    .cert-issuer { font-size: 0.875rem; color: var(--teal); font-weight: 500; }
+    .cert-year { font-size: 0.75rem; color: var(--ink-light); margin-top: 0.3rem; }
+
+    /* ── CONTACT ── */
+    .contact {
+      background: var(--cream);
       text-align: center;
-      padding: 2rem;
-      font-size: 0.85rem;
-      color: #888;
+      padding: 8rem 5rem;
+    }
+    .contact .section-label { justify-content: center; display: flex; margin-bottom: 1.5rem; }
+    .contact .section-title { margin-bottom: 1rem; }
+    .contact-sub {
+      font-size: 1.05rem;
+      color: var(--ink-light);
+      font-weight: 300;
+      margin-bottom: 3rem;
+      max-width: 520px;
+      margin-left: auto; margin-right: auto;
+      line-height: 1.7;
+    }
+    .contact-links { display: flex; justify-content: center; gap: 1.25rem; flex-wrap: wrap; }
+    .contact-link {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      padding: 1rem 2rem;
+      border: 1.5px solid var(--border);
+      color: var(--ink);
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 500;
+      letter-spacing: 0.03em;
+      border-radius: 2px;
+      transition: border-color 0.2s, color 0.2s, background 0.2s;
+    }
+    .contact-link:hover { border-color: var(--teal); color: var(--teal); }
+    .contact-link.primary {
+      background: var(--teal); border-color: var(--teal); color: white;
+    }
+    .contact-link.primary:hover { background: var(--teal-light); border-color: var(--teal-light); }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 2rem 5rem;
+      border-top: 1px solid var(--border);
+      display: flex; justify-content: space-between; align-items: center;
+      background: var(--cream);
+    }
+    .footer-name {
+      font-family: 'DM Serif Display', serif;
+      font-size: 0.95rem;
+      color: var(--ink-light);
+    }
+    .footer-copy {
+      font-size: 0.8rem;
+      color: var(--ink-light);
+      font-weight: 300;
+    }
+    .footer-open {
+      display: flex; align-items: center; gap: 0.5rem;
+      font-size: 0.8rem;
+      color: var(--teal);
+      font-weight: 500;
+    }
+    .footer-dot {
+      width: 7px; height: 7px;
+      background: var(--teal);
+      border-radius: 50%;
+      animation: pulse 2s ease infinite;
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeLeft {
+      from { opacity: 0; transform: translateX(20px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.8); }
+    }
+
+    /* ── SCROLL REVEAL ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { gap: 1.25rem; }
+      .hero { grid-template-columns: 1fr; min-height: auto; }
+      .hero-left { padding: 6rem 2rem 3rem; }
+      .hero-left::after { display: none; }
+      .hero-right { padding: 2rem; flex-direction: row; flex-wrap: wrap; }
+      .stat-card { flex: 1; min-width: 200px; }
+      section { padding: 5rem 2rem; }
+      .about { grid-template-columns: 1fr; gap: 3rem; }
+      .projects-grid { grid-template-columns: 1fr; }
+      .project-card.featured { grid-column: span 1; flex-direction: column; }
+      .project-card.featured .project-visual { width: 100%; height: 180px; }
+      .exp-grid { grid-template-columns: 1fr; }
+      .skills-grid { grid-template-columns: 1fr 1fr; gap: 2.5rem; }
+      .edu-grid { grid-template-columns: 1fr; }
+      footer { flex-direction: column; gap: 1rem; text-align: center; }
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1>Emina Toric</h1>
-    <p>Creative problem solver</p>
-  </header>
 
-  <section id="projects">
-    <h2 style="text-align:center;">Portfolio Projects</h2>
-    <div class="projects-grid">
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="nav-logo">Emina Toric</a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
 
-  <div class="project-card">
-    <div class="content">
-      <h3>💖 HeartPlay</h3>
-      <p>A web app that uses AI and child development principles to generate creative bonding activities for parents and children.</p>
-      <a class="button" href="https://heart-play-frontend.vercel.app/" target="_blank"><i class="fas fa-play"></i>Live Demo</a>
-      <a class="button" href="https://github.com/EminaToric/HeartPlay" target="_blank"><i class="fas fa-code"></i>GitHub</a>
+  <!-- HERO -->
+  <section class="hero" style="padding-top: 0;">
+    <div class="hero-left">
+      <p class="hero-eyebrow">Healthcare Data & AI Professional</p>
+      <h1 class="hero-name">Emina<br><em>Toric,</em><br>MSc</h1>
+      <p class="hero-tagline">
+        10+ years at the intersection of healthcare data and human outcomes. 
+        Two master's degrees. A generative AI practitioner who builds things 
+        that matter — and now bringing that expertise to Europe.
+      </p>
+      <div class="hero-ctas">
+        <a href="#projects" class="btn-primary">View My Work →</a>
+        <a href="https://linkedin.com/in/emina-toric-msc" target="_blank" class="btn-secondary">LinkedIn ↗</a>
+      </div>
     </div>
-  </div>
 
-      <div class="project-card">
-        <div class="content">
-          <h3>Sales Analytics Dashboard</h3>
-          <p>An interactive Streamlit dashboard exploring sales trends and revenue insights from the UK retail dataset.</p>
-          <a class="button" href="https://salesanalytics-et.streamlit.app/" target="_blank"><i class="fas fa-play"></i>Live Demo</a>
-          <a class="button" href="https://github.com/EminaToric/sales-analytics" target="_blank"><i class="fas fa-code"></i>GitHub</a>
-        </div>
+    <div class="hero-right">
+      <div class="stat-card">
+        <div class="stat-number">10+</div>
+        <div class="stat-label">Years in Healthcare Analytics</div>
+        <div class="stat-detail">UnitedHealth Group & Humana — two of the largest health insurers in the US</div>
       </div>
-
-      <div class="project-card">
-        <div class="content">
-          <h3>SegmentIQ - Customer Segmentation</h3>
-          <p>Used clustering algorithms to segment customers by behavior and spending patterns. Built with Gradio.</p>
-          <a class="button" href="https://huggingface.co/spaces/EmiTor/segmentiq" target="_blank"><i class="fas fa-play"></i>Live Demo</a>
-          <a class="button" href="https://github.com/EminaToric/segmentiq" target="_blank"><i class="fas fa-code"></i>GitHub</a>
-        </div>
+      <div class="stat-card">
+        <div class="stat-number">2</div>
+        <div class="stat-label">Master's Degrees</div>
+        <div class="stat-detail">Computer Science · Child & Human Development — a rare combination</div>
       </div>
-
+      <div class="stat-card">
+        <div class="stat-number">3</div>
+        <div class="stat-label">Live AI-Powered Projects</div>
+        <div class="stat-detail">Full-stack apps deployed and running — not just portfolio pieces</div>
+      </div>
     </div>
   </section>
 
+  <!-- ABOUT -->
+  <section class="about" id="about">
+    <div>
+      <p class="section-label">About Me</p>
+      <h2 class="section-title">Data that<br><em style="font-style:italic;">serves people,</em><br>not just systems.</h2>
+      <p class="section-intro" style="margin-top: 1.5rem;">
+        I've spent over a decade inside two of America's largest health insurance organizations, 
+        translating complex healthcare data into decisions that affect real people's lives. 
+        Medicare populations. Medicaid programs. Economic modeling at scale.
+      </p>
+      <p class="section-intro" style="margin-top: 1rem;">
+        My MS in Computer Science and certification in Generative AI mean I can do more than 
+        analyze — I can build. My MS in Child and Human Development means I never forget 
+        the human on the other side of the data.
+      </p>
+      <p class="section-intro" style="margin-top: 1rem;">
+        I'm now seeking opportunities in European healthtech, where data, AI, and 
+        human-centered design come together to build something genuinely better.
+      </p>
+    </div>
+    <div class="about-right reveal">
+      <div class="about-pill">
+        <div class="about-pill-icon">🏥</div>
+        <div>
+          <div class="about-pill-title">Healthcare Expertise</div>
+          <div class="about-pill-text">Deep knowledge of Medicare, Medicaid, claims data, population health, and health economics from a decade inside two Fortune 500 healthcare companies.</div>
+        </div>
+      </div>
+      <div class="about-pill">
+        <div class="about-pill-icon">🤖</div>
+        <div>
+          <div class="about-pill-title">AI & Machine Learning</div>
+          <div class="about-pill-text">Hands-on practitioner in generative AI, LLMs, clustering, and predictive modeling — with deployed, real-world applications to show for it.</div>
+        </div>
+      </div>
+      <div class="about-pill">
+        <div class="about-pill-icon">👶</div>
+        <div>
+          <div class="about-pill-title">Human Development Lens</div>
+          <div class="about-pill-text">Uniquely cross-disciplinary: an MS in Child & Human Development informs how I think about health not as data points, but as human experience across the lifespan.</div>
+        </div>
+      </div>
+      <div class="about-pill">
+        <div class="about-pill-icon">🌍</div>
+        <div>
+          <div class="about-pill-title">Open to Europe</div>
+          <div class="about-pill-text">Actively seeking roles in European healthtech, digital health, and health analytics. Available to relocate in 2026.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section class="projects" id="projects">
+    <div class="projects-header reveal">
+      <div>
+        <p class="section-label">Portfolio</p>
+        <h2 class="section-title">Live projects.<br>Real code. Real impact.</h2>
+      </div>
+    </div>
+
+    <div class="projects-grid">
+      <!-- HeartPlay — FEATURED -->
+      <div class="project-card featured reveal">
+        <div class="project-visual heartplay">💖</div>
+        <div class="project-body">
+          <span class="project-tag tag-ai">Featured · Generative AI</span>
+          <h3 class="project-name">HeartPlay</h3>
+          <p class="project-desc">
+            An AI-powered web app that generates creative, developmentally-appropriate bonding 
+            activities for parents and children — based on the child's age, interests, available 
+            time, and setting. Built at the intersection of my two master's degrees: Computer Science 
+            and Child & Human Development. This isn't a template project — it's a full-stack 
+            application I conceived, designed, and shipped.
+          </p>
+          <div class="project-tech">
+            <span class="tech-badge">React</span>
+            <span class="tech-badge">FastAPI</span>
+            <span class="tech-badge">Python</span>
+            <span class="tech-badge">OpenAI GPT</span>
+            <span class="tech-badge">Tailwind CSS</span>
+            <span class="tech-badge">Vercel</span>
+            <span class="tech-badge">Render</span>
+          </div>
+          <div class="project-links">
+            <a href="https://heart-play-frontend.vercel.app/" target="_blank" class="project-link">Live Demo ↗</a>
+            <a href="https://github.com/EminaToric/HeartPlay" target="_blank" class="project-link github">GitHub ↗</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sales Analytics -->
+      <div class="project-card reveal">
+        <div class="project-visual sales">📊</div>
+        <div class="project-body">
+          <span class="project-tag tag-analytics">Analytics Dashboard</span>
+          <h3 class="project-name">Sales Analytics Dashboard</h3>
+          <p class="project-desc">
+            An interactive dashboard exploring sales trends and revenue insights from UK retail data. 
+            Built with Streamlit, demonstrating data visualization and exploratory analysis skills 
+            in a clean, deployable interface.
+          </p>
+          <div class="project-tech">
+            <span class="tech-badge">Python</span>
+            <span class="tech-badge">Streamlit</span>
+            <span class="tech-badge">Pandas</span>
+            <span class="tech-badge">Data Visualization</span>
+          </div>
+          <div class="project-links">
+            <a href="https://salesanalytics-et.streamlit.app/" target="_blank" class="project-link">Live Demo ↗</a>
+            <a href="https://github.com/EminaToric/sales-analytics" target="_blank" class="project-link github">GitHub ↗</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- SegmentIQ -->
+      <div class="project-card reveal">
+        <div class="project-visual segment">🧠</div>
+        <div class="project-body">
+          <span class="project-tag tag-ml">Machine Learning</span>
+          <h3 class="project-name">SegmentIQ</h3>
+          <p class="project-desc">
+            Customer segmentation using clustering algorithms to group customers by behavior 
+            and spending patterns. Deployed as an interactive Gradio app on Hugging Face Spaces — 
+            a practical demonstration of unsupervised ML in action.
+          </p>
+          <div class="project-tech">
+            <span class="tech-badge">Python</span>
+            <span class="tech-badge">Scikit-learn</span>
+            <span class="tech-badge">Gradio</span>
+            <span class="tech-badge">Clustering</span>
+            <span class="tech-badge">Hugging Face</span>
+          </div>
+          <div class="project-links">
+            <a href="https://huggingface.co/spaces/EmiTor/segmentiq" target="_blank" class="project-link">Live Demo ↗</a>
+            <a href="https://github.com/EminaToric/segmentiq" target="_blank" class="project-link github">GitHub ↗</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section class="experience" id="experience">
+    <div class="reveal">
+      <p class="section-label">Experience</p>
+      <h2 class="section-title">A decade at the<br>forefront of health data.</h2>
+    </div>
+
+    <div class="exp-grid">
+      <div class="exp-card current reveal">
+        <span class="exp-current-badge">Current</span>
+        <div class="exp-company">UnitedHealth Group</div>
+        <div class="exp-title">Economics Data Consultant</div>
+        <div class="exp-duration">September 2021 – Present · 4+ years</div>
+        <ul class="exp-bullets">
+          <li>Analyze large-scale healthcare datasets to identify cost drivers, trends, and opportunities for program improvement across Medicare and Medicaid populations</li>
+          <li>Translate complex economic and clinical data into actionable insights for senior stakeholders and cross-functional teams</li>
+          <li>Apply AI and machine learning to enhance analytical capabilities and automate reporting workflows</li>
+          <li>Deliver strategic consulting work supporting decisions that affect millions of health plan members</li>
+        </ul>
+      </div>
+
+      <div class="exp-card reveal">
+        <div class="exp-company">Humana</div>
+        <div class="exp-title">Data Consultant → Technology Analyst → Data Analyst</div>
+        <div class="exp-duration">January 2013 – September 2021 · 8+ years</div>
+        <ul class="exp-bullets">
+          <li>Progressed through three roles across a decade, building deep expertise in healthcare data, technology, and strategic analytics</li>
+          <li>Designed analytical frameworks to monitor health outcomes and program performance across member populations</li>
+          <li>Partnered with clinical and operational teams to surface insights from complex, multi-source healthcare datasets</li>
+          <li>Bridged data and technology functions as a Technology Analyst, supporting enterprise transformation initiatives</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section class="skills">
+    <p class="section-label">Skills & Tools</p>
+    <h2 class="section-title">What I bring to the table.</h2>
+    <div class="skills-grid reveal">
+      <div>
+        <div class="skill-group-title">Healthcare Domain</div>
+        <ul class="skill-list">
+          <li>Medicare & Medicaid Programs</li>
+          <li>Claims Data Analysis</li>
+          <li>Population Health</li>
+          <li>Health Economics</li>
+          <li>Clinical Data</li>
+          <li>Healthcare Policy</li>
+        </ul>
+      </div>
+      <div>
+        <div class="skill-group-title">AI & Data Science</div>
+        <ul class="skill-list">
+          <li>Generative AI & LLMs</li>
+          <li>Prompt Engineering</li>
+          <li>Machine Learning</li>
+          <li>Clustering Algorithms</li>
+          <li>Predictive Modeling</li>
+          <li>Natural Language Processing</li>
+        </ul>
+      </div>
+      <div>
+        <div class="skill-group-title">Technical Stack</div>
+        <ul class="skill-list">
+          <li>Python · SQL</li>
+          <li>React · FastAPI</li>
+          <li>Streamlit · Gradio</li>
+          <li>Tableau · Power BI</li>
+          <li>OpenAI API</li>
+          <li>Vercel · Hugging Face</li>
+        </ul>
+      </div>
+      <div>
+        <div class="skill-group-title">Strategy & Leadership</div>
+        <ul class="skill-list">
+          <li>Data Consulting</li>
+          <li>Stakeholder Management</li>
+          <li>Strategic Analytics</li>
+          <li>Business Intelligence</li>
+          <li>Cross-functional Collaboration</li>
+          <li>Remote Team Leadership</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- EDUCATION -->
+  <section class="education">
+    <div class="reveal">
+      <p class="section-label">Education & Credentials</p>
+      <h2 class="section-title">Built on rare<br>interdisciplinary foundations.</h2>
+    </div>
+    <div class="edu-grid reveal">
+      <div class="edu-card">
+        <div class="edu-degree">Master of Science</div>
+        <div class="edu-field">Computer Science</div>
+        <div class="edu-school">Georgia Southwestern State University</div>
+        <div class="edu-year">Completed December 2025</div>
+      </div>
+      <div class="edu-card">
+        <div class="edu-degree">Master of Science</div>
+        <div class="edu-field">Child & Human Development</div>
+        <div class="edu-school">Arizona State University</div>
+        <div class="edu-year">Undergraduate through graduate</div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-icon">🎓</div>
+        <div class="cert-name">Generative AI with Large Language Models</div>
+        <div class="cert-issuer">DeepLearning.AI</div>
+        <div class="cert-year">Issued July 2025</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact" id="contact">
+    <p class="section-label">Get In Touch</p>
+    <h2 class="section-title">Let's build something<br>meaningful together.</h2>
+    <p class="contact-sub">
+      I'm actively seeking roles in European healthtech, digital health, and health analytics. 
+      If you're working on something at the intersection of data, AI, and human health — 
+      I'd love to hear from you.
+    </p>
+    <div class="contact-links">
+      <a href="https://linkedin.com/in/emina-toric-msc" target="_blank" class="contact-link primary">
+        Connect on LinkedIn ↗
+      </a>
+      <a href="https://github.com/EminaToric" target="_blank" class="contact-link">
+        GitHub ↗
+      </a>
+      <a href="https://heart-play-frontend.vercel.app/" target="_blank" class="contact-link">
+        See HeartPlay Live ↗
+      </a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
   <footer>
-    &copy; 2025 Emina Toric. All rights reserved.
+    <span class="footer-name">Emina Toric, MSc</span>
+    <div class="footer-open">
+      <div class="footer-dot"></div>
+      Open to European Opportunities
+    </div>
+    <span class="footer-copy">© 2025 Emina Toric. All rights reserved.</span>
   </footer>
+
+  <script>
+    // Scroll reveal
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
 </body>
 </html>
