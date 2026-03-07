@@ -1,0 +1,1251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Emina Toric — Data & AI for Human Outcomes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #F7F3EE;
+    --sand: #E8DDD0;
+    --terracotta: #C4714A;
+    --terra-light: #D4896A;
+    --sage: #7A8C72;
+    --dusty-rose: #C4908A;
+    --ink: #1E1B18;
+    --ink-light: #4A4540;
+    --ink-faint: #8A8078;
+    --white: #FDFAF7;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    font-size: 16px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.25rem 4rem;
+    background: rgba(247, 243, 238, 0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(196, 113, 74, 0.12);
+  }
+
+  .nav-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    color: var(--ink);
+    text-decoration: none;
+  }
+
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a {
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--terracotta); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 10rem 4rem 6rem 6rem;
+    position: relative;
+    z-index: 2;
+  }
+
+  .hero-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--terracotta);
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.2s forwards;
+  }
+
+  .hero-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3.5rem, 6vw, 5.5rem);
+    font-weight: 300;
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    margin-bottom: 1rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.35s forwards;
+  }
+
+  .hero-name em {
+    font-style: italic;
+    color: var(--terracotta);
+  }
+
+  .hero-tagline {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.1rem, 2vw, 1.4rem);
+    font-weight: 300;
+    font-style: italic;
+    color: var(--ink-light);
+    margin-bottom: 2rem;
+    max-width: 420px;
+    line-height: 1.5;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.5s forwards;
+  }
+
+  .hero-descriptor {
+    font-size: 0.92rem;
+    color: var(--ink-faint);
+    max-width: 400px;
+    margin-bottom: 3rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.65s forwards;
+  }
+
+  .hero-ctas {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.8s forwards;
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.85rem 2rem;
+    background: var(--terracotta);
+    color: var(--white);
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+  }
+  .btn-primary:hover { background: var(--terra-light); transform: translateY(-1px); }
+
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.85rem 2rem;
+    background: transparent;
+    color: var(--ink);
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: 1.5px solid var(--ink);
+    transition: border-color 0.2s, color 0.2s, transform 0.2s;
+  }
+  .btn-secondary:hover { border-color: var(--terracotta); color: var(--terracotta); transform: translateY(-1px); }
+
+  .hero-right {
+    position: relative;
+    overflow: hidden;
+    opacity: 0;
+    animation: fadeIn 1.2s ease 0.4s forwards;
+  }
+
+  .hero-visual {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 30% 40%, rgba(196,113,74,0.18) 0%, transparent 60%),
+      radial-gradient(ellipse at 75% 70%, rgba(122,140,114,0.15) 0%, transparent 50%),
+      radial-gradient(ellipse at 60% 20%, rgba(196,144,138,0.12) 0%, transparent 45%),
+      linear-gradient(135deg, var(--sand) 0%, var(--cream) 100%);
+  }
+
+  .hero-stat-cluster {
+    position: absolute;
+    bottom: 8rem;
+    left: 3rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .hero-stat {
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+  }
+
+  .hero-stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3rem;
+    font-weight: 300;
+    color: var(--terracotta);
+    line-height: 1;
+  }
+
+  .hero-stat-label {
+    font-size: 0.78rem;
+    color: var(--ink-faint);
+    max-width: 130px;
+    line-height: 1.4;
+  }
+
+  .hero-availability {
+    position: absolute;
+    top: 6rem;
+    right: 3rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    color: var(--sage);
+    text-transform: uppercase;
+  }
+
+  .availability-dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--sage);
+    animation: pulse 2s infinite;
+  }
+
+  /* ── MARQUEE ── */
+  .marquee-bar {
+    background: var(--ink);
+    padding: 0.9rem 0;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  .marquee-inner {
+    display: inline-flex;
+    gap: 0;
+    animation: marquee 25s linear infinite;
+  }
+
+  .marquee-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 0 2rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(247,243,238,0.6);
+  }
+
+  .marquee-item span.accent { color: var(--terracotta); }
+  .marquee-sep { color: var(--terracotta); opacity: 0.5; }
+
+  /* ── SECTIONS ── */
+  section { padding: 7rem 6rem; }
+
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--terracotta);
+    margin-bottom: 3rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, rgba(196,113,74,0.3), transparent);
+    max-width: 120px;
+  }
+
+  /* ── ABOUT ── */
+  #about {
+    background: var(--white);
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 6rem;
+    align-items: start;
+  }
+
+  .about-left { position: sticky; top: 8rem; }
+
+  .about-headline {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.2rem, 3.5vw, 3rem);
+    font-weight: 300;
+    line-height: 1.2;
+    color: var(--ink);
+    margin-bottom: 2rem;
+  }
+
+  .about-headline em { font-style: italic; color: var(--terracotta); }
+
+  .about-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 2rem;
+  }
+
+  .tag {
+    padding: 0.35rem 0.85rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border: 1px solid;
+  }
+
+  .tag-terra { border-color: rgba(196,113,74,0.4); color: var(--terracotta); }
+  .tag-sage  { border-color: rgba(122,140,114,0.4); color: var(--sage); }
+  .tag-rose  { border-color: rgba(196,144,138,0.4); color: var(--dusty-rose); }
+
+  .about-right p {
+    font-size: 1.05rem;
+    color: var(--ink-light);
+    margin-bottom: 1.5rem;
+    line-height: 1.8;
+  }
+
+  .about-right p strong { color: var(--ink); font-weight: 500; }
+
+  .about-right p.lead {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.35rem;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--ink);
+    line-height: 1.6;
+  }
+
+  /* ── EXPERTISE BANDS ── */
+  #expertise {
+    background: var(--ink);
+    padding: 5rem 6rem;
+  }
+
+  #expertise .section-label { color: var(--terracotta); }
+  #expertise .section-label::after { background: linear-gradient(to right, rgba(196,113,74,0.4), transparent); }
+
+  .expertise-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    margin-top: 1rem;
+  }
+
+  .expertise-card {
+    background: rgba(255,255,255,0.04);
+    padding: 2.5rem;
+    border: 1px solid rgba(255,255,255,0.06);
+    transition: background 0.3s;
+  }
+
+  .expertise-card:hover { background: rgba(196,113,74,0.08); }
+
+  .expertise-icon {
+    font-size: 1.6rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .expertise-card h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    font-weight: 400;
+    color: var(--cream);
+    margin-bottom: 0.75rem;
+  }
+
+  .expertise-card p {
+    font-size: 0.88rem;
+    color: rgba(247,243,238,0.5);
+    line-height: 1.7;
+  }
+
+  .expertise-card .expertise-skills {
+    margin-top: 1.25rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .skill-chip {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.08em;
+    padding: 0.25rem 0.6rem;
+    background: rgba(196,113,74,0.15);
+    color: var(--terra-light);
+    border: 1px solid rgba(196,113,74,0.2);
+  }
+
+  /* ── PROJECTS ── */
+  #projects { background: var(--cream); }
+
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2px;
+  }
+
+  .project-card {
+    background: var(--white);
+    padding: 3rem;
+    border: 1px solid rgba(0,0,0,0.06);
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+
+  .project-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.08);
+  }
+
+  .project-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+  }
+
+  .project-card.terra::before { background: var(--terracotta); }
+  .project-card.sage::before  { background: var(--sage); }
+  .project-card.rose::before  { background: var(--dusty-rose); }
+  .project-card.sand::before  { background: #B8A898; }
+
+  .project-featured {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--terracotta);
+    margin-bottom: 1rem;
+  }
+
+  .project-card h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.75rem;
+    font-weight: 400;
+    color: var(--ink);
+    margin-bottom: 0.75rem;
+    line-height: 1.2;
+  }
+
+  .project-card .project-why {
+    font-size: 0.88rem;
+    color: var(--ink-faint);
+    font-style: italic;
+    margin-bottom: 1rem;
+  }
+
+  .project-card p {
+    font-size: 0.93rem;
+    color: var(--ink-light);
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+  }
+
+  .project-stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-bottom: 1.75rem;
+  }
+
+  .stack-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.05em;
+    padding: 0.2rem 0.55rem;
+    background: var(--sand);
+    color: var(--ink-light);
+  }
+
+  .project-links { display: flex; gap: 1rem; }
+
+  .project-link {
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--terracotta);
+    border-bottom: 1px solid rgba(196,113,74,0.3);
+    padding-bottom: 1px;
+    transition: border-color 0.2s;
+  }
+  .project-link:hover { border-color: var(--terracotta); }
+  .project-link.secondary { color: var(--ink-faint); border-color: rgba(0,0,0,0.15); }
+  .project-link.secondary:hover { color: var(--ink); border-color: var(--ink); }
+
+  /* ── EXPERIENCE ── */
+  #experience {
+    background: var(--sand);
+  }
+
+  .experience-list { display: flex; flex-direction: column; gap: 0; }
+
+  .exp-item {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 3rem;
+    padding: 3rem 0;
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+    align-items: start;
+  }
+
+  .exp-item:last-child { border-bottom: none; }
+
+  .exp-meta { padding-top: 0.25rem; }
+
+  .exp-period {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    color: var(--ink-faint);
+    text-transform: uppercase;
+    margin-bottom: 0.4rem;
+  }
+
+  .exp-company {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  .exp-content h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    font-weight: 400;
+    color: var(--ink);
+    margin-bottom: 0.75rem;
+  }
+
+  .exp-content p {
+    font-size: 0.92rem;
+    color: var(--ink-light);
+    line-height: 1.75;
+    margin-bottom: 1rem;
+  }
+
+  .exp-highlights {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-top: 1rem;
+  }
+
+  .exp-highlight {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    font-size: 0.88rem;
+    color: var(--ink-light);
+  }
+
+  .exp-highlight::before {
+    content: '→';
+    color: var(--terracotta);
+    flex-shrink: 0;
+    margin-top: 0.1rem;
+  }
+
+  /* ── EDUCATION ── */
+  #education {
+    background: var(--white);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+  }
+
+  .edu-left {}
+
+  .edu-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-top: 1rem;
+  }
+
+  .edu-card {
+    padding: 1.75rem;
+    border: 1px solid rgba(0,0,0,0.08);
+    background: var(--cream);
+    position: relative;
+  }
+
+  .edu-card::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: var(--terracotta);
+  }
+
+  .edu-card h4 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem;
+    font-weight: 400;
+    margin-bottom: 0.25rem;
+  }
+
+  .edu-card .edu-school {
+    font-size: 0.82rem;
+    color: var(--ink-faint);
+    margin-bottom: 0.15rem;
+  }
+
+  .edu-card .edu-note {
+    font-size: 0.8rem;
+    color: var(--terracotta);
+    font-style: italic;
+  }
+
+  .edu-right {}
+
+  .cert-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+
+  .cert-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 1.25rem;
+    background: var(--cream);
+    border: 1px solid rgba(0,0,0,0.06);
+  }
+
+  .cert-icon { font-size: 1.2rem; }
+
+  .cert-item h5 {
+    font-size: 0.88rem;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 0.1rem;
+  }
+
+  .cert-item p {
+    font-size: 0.75rem;
+    color: var(--ink-faint);
+  }
+
+  /* ── MARKET / OPENNESS ── */
+  #open {
+    background: var(--terracotta);
+    padding: 5rem 6rem;
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 6rem;
+    align-items: center;
+  }
+
+  #open .section-label { color: rgba(255,255,255,0.6); }
+  #open .section-label::after { background: linear-gradient(to right, rgba(255,255,255,0.3), transparent); }
+
+  .open-headline {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    font-weight: 300;
+    color: var(--white);
+    line-height: 1.25;
+    margin-bottom: 1.5rem;
+  }
+
+  .open-headline em { font-style: italic; }
+
+  .open-desc {
+    font-size: 0.95rem;
+    color: rgba(253,250,247,0.8);
+    line-height: 1.8;
+  }
+
+  .open-right {}
+
+  .open-cards { display: flex; flex-direction: column; gap: 1rem; }
+
+  .open-card {
+    padding: 1.25rem 1.5rem;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.15);
+    backdrop-filter: blur(8px);
+  }
+
+  .open-card h4 {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--white);
+    margin-bottom: 0.25rem;
+  }
+
+  .open-card p {
+    font-size: 0.8rem;
+    color: rgba(253,250,247,0.7);
+  }
+
+  /* ── CONTACT ── */
+  #contact {
+    background: var(--ink);
+    padding: 7rem 6rem;
+    text-align: center;
+  }
+
+  .contact-headline {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    font-weight: 300;
+    color: var(--cream);
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+  }
+
+  .contact-headline em { font-style: italic; color: var(--terracotta); }
+
+  .contact-sub {
+    font-size: 0.95rem;
+    color: rgba(247,243,238,0.5);
+    max-width: 480px;
+    margin: 0 auto 3rem;
+    line-height: 1.7;
+  }
+
+  .contact-links {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .contact-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: rgba(247,243,238,0.6);
+    border-bottom: 1px solid rgba(247,243,238,0.15);
+    padding-bottom: 2px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+
+  .contact-link:hover { color: var(--terracotta); border-color: var(--terracotta); }
+
+  footer {
+    background: var(--ink);
+    border-top: 1px solid rgba(255,255,255,0.06);
+    padding: 1.5rem 6rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  footer p {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    color: rgba(247,243,238,0.25);
+    text-transform: uppercase;
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50%       { opacity: 0.5; transform: scale(1.3); }
+  }
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+
+  /* ── SCROLL REVEAL ── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    nav { padding: 1rem 2rem; }
+    .nav-links { gap: 1.5rem; }
+    .hero { grid-template-columns: 1fr; }
+    .hero-right { display: none; }
+    .hero-left { padding: 9rem 2.5rem 5rem; }
+    section { padding: 5rem 2.5rem; }
+    #about { grid-template-columns: 1fr; gap: 2rem; }
+    .about-left { position: static; }
+    .expertise-grid { grid-template-columns: 1fr; }
+    .projects-grid { grid-template-columns: 1fr; }
+    .exp-item { grid-template-columns: 1fr; gap: 0.5rem; }
+    #education { grid-template-columns: 1fr; gap: 3rem; }
+    #open { grid-template-columns: 1fr; gap: 3rem; padding: 4rem 2.5rem; }
+    #contact { padding: 5rem 2.5rem; }
+    footer { padding: 1.5rem 2.5rem; flex-direction: column; gap: 0.5rem; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-name">Emina Toric</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#projects">Work</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <p class="hero-eyebrow">Data · AI · Human Outcomes</p>
+    <h1 class="hero-name">Emina<br><em>Toric,</em><br>MSc</h1>
+    <p class="hero-tagline">I turn complex data into decisions that affect real people's lives.</p>
+    <p class="hero-descriptor">
+      A decade in healthcare analytics at Fortune 500 companies, a CS master's, and a background in human development — combined into something genuinely rare.
+    </p>
+    <div class="hero-ctas">
+      <a href="#projects" class="btn-primary">See My Work →</a>
+      <a href="#contact" class="btn-secondary">Get In Touch</a>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="hero-visual"></div>
+    <div class="hero-availability">
+      <div class="availability-dot"></div>
+      Open to new roles
+    </div>
+    <div class="hero-stat-cluster">
+      <div class="hero-stat">
+        <span class="hero-stat-num">10+</span>
+        <span class="hero-stat-label">Years in healthcare & human-centered data</span>
+      </div>
+      <div class="hero-stat">
+        <span class="hero-stat-num">2</span>
+        <span class="hero-stat-label">Master's degrees — CS and Human Development</span>
+      </div>
+      <div class="hero-stat">
+        <span class="hero-stat-num">4</span>
+        <span class="hero-stat-label">Live deployed projects, zero "coming soon"</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-bar" aria-hidden="true">
+  <div class="marquee-inner">
+    <span class="marquee-item">Healthcare Analytics <span class="marquee-sep">✦</span></span>
+    <span class="marquee-item"><span class="accent">Generative AI</span> <span class="marquee-sep">✦</span></span>
+    <span class="marquee-item">EdTech & Learning Systems <span class="marquee-sep">✦</span></span>
+    <span class="marquee-item"><span class="accent">Python · SQL · Snowflake</span> <span class="marquee-sep">✦</span></span>
+    <span class="marquee-item">Child & Human Development <span class="marquee-sep">✦</span></span>
+    <span class="marquee-item"><span class="accent">Remote · Global</span> <span class="marquee-sep">✦</span></span>
+    <span class="marquee-item">Population Health <span class="marquee-sep">✦</span></span>
+    <span class="marquee-item"><span class="accent">Machine Learning</span> <span class="marquee-sep">✦</span></span>
+    <!-- duplicate for seamless loop -->
+    <span class="marquee-item">Healthcare Analytics <span class="marquee-sep">✦</span></span>
+    <span class="marquee-item"><span class="accent">Generative AI</span> <span class="marquee-sep">✦</span></span>
+    <span class="marquee-item">EdTech & Learning Systems <span class="marquee-sep">✦</span></span>
+    <span class="marquee-item"><span class="accent">Python · SQL · Snowflake</span> <span class="marquee-sep">✦</span></span>
+    <span class="marquee-item">Child & Human Development <span class="marquee-sep">✦</span></span>
+    <span class="marquee-item"><span class="accent">Remote · Global</span> <span class="marquee-sep">✦</span></span>
+    <span class="marquee-item">Population Health <span class="marquee-sep">✦</span></span>
+    <span class="marquee-item"><span class="accent">Machine Learning</span> <span class="marquee-sep">✦</span></span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-left reveal">
+    <p class="section-label">About</p>
+    <h2 class="about-headline">Data is how<br>I think. <em>People</em><br>are why I do it.</h2>
+    <div class="about-tags">
+      <span class="tag tag-terra">Healthtech</span>
+      <span class="tag tag-terra">Digital Health</span>
+      <span class="tag tag-sage">EdTech</span>
+      <span class="tag tag-sage">Learning Analytics</span>
+      <span class="tag tag-rose">AI & ML</span>
+      <span class="tag tag-rose">Remote · Global</span>
+    </div>
+  </div>
+
+  <div class="about-right reveal">
+    <p class="lead">
+      I've spent over a decade inside two of the largest health insurers in America — UnitedHealth Group and Humana — making sense of Medicare and Medicaid data at a scale where rounding errors affect real people's lives.
+    </p>
+    <p>
+      That context never leaves you. And it's why I decided to go deeper: I finished my <strong>MS in Computer Science in 2025</strong>, earned a certification in Generative AI, and built full-stack AI applications from scratch — not to pivot away from domain expertise, but to bring more firepower to it.
+    </p>
+    <p>
+      What makes me genuinely unusual is my <strong>MS in Child and Human Development</strong>. It means I think about data across the full human lifespan — from pediatric outcomes to aging populations, from early childhood learning to behavioral health. Most data professionals bring technical depth or domain knowledge. I bring both, plus the human development lens that ties them together.
+    </p>
+    <p>
+      I'm currently exploring roles at the intersection of <strong>data, AI, and human outcomes</strong> — in healthtech, digital health, EdTech, and international organizations. I'm remote-native, globally curious, and very good at turning complex systems into clear decisions.
+    </p>
+  </div>
+</section>
+
+<!-- EXPERTISE -->
+<section id="expertise">
+  <p class="section-label">What I Bring</p>
+  <div class="expertise-grid">
+
+    <div class="expertise-card reveal">
+      <div class="expertise-icon">🏥</div>
+      <h3>Healthcare Domain Depth</h3>
+      <p>A decade of Medicare and Medicaid analytics from inside Fortune 500 companies. Claims data, population health, health economics, and clinical data at scale.</p>
+      <div class="expertise-skills">
+        <span class="skill-chip">Medicare / Medicaid</span>
+        <span class="skill-chip">Claims Analysis</span>
+        <span class="skill-chip">Population Health</span>
+        <span class="skill-chip">Health Economics</span>
+        <span class="skill-chip">Snowflake</span>
+      </div>
+    </div>
+
+    <div class="expertise-card reveal">
+      <div class="expertise-icon">🤖</div>
+      <h3>AI & Data Science</h3>
+      <p>Hands-on with generative AI, LLMs, machine learning, and predictive modeling — with deployed applications to show for it, not just certificates.</p>
+      <div class="expertise-skills">
+        <span class="skill-chip">Generative AI / LLMs</span>
+        <span class="skill-chip">Machine Learning</span>
+        <span class="skill-chip">Clustering</span>
+        <span class="skill-chip">Predictive Modeling</span>
+        <span class="skill-chip">OpenAI API</span>
+      </div>
+    </div>
+
+    <div class="expertise-card reveal">
+      <div class="expertise-icon">👶</div>
+      <h3>Human Development Lens</h3>
+      <p>An MS in Child and Human Development means I approach data and technology with a full-lifespan perspective — rare and genuinely valuable in EdTech, family health, and child welfare tech.</p>
+      <div class="expertise-skills">
+        <span class="skill-chip">Child Development</span>
+        <span class="skill-chip">Behavioral Outcomes</span>
+        <span class="skill-chip">EdTech</span>
+        <span class="skill-chip">Learning Analytics</span>
+        <span class="skill-chip">UX for Families</span>
+      </div>
+    </div>
+
+    <div class="expertise-card reveal">
+      <div class="expertise-icon">🛠</div>
+      <h3>Full-Stack Technical Range</h3>
+      <p>From SQL and Python to React and FastAPI — I can work end-to-end on a data product, not just hand things off at the analysis stage.</p>
+      <div class="expertise-skills">
+        <span class="skill-chip">Python</span>
+        <span class="skill-chip">SQL</span>
+        <span class="skill-chip">React</span>
+        <span class="skill-chip">FastAPI</span>
+        <span class="skill-chip">Tableau / Power BI</span>
+      </div>
+    </div>
+
+    <div class="expertise-card reveal">
+      <div class="expertise-icon">🗣</div>
+      <h3>Stakeholder Communication</h3>
+      <p>Years of presenting complex findings to senior leadership at Fortune 500 companies. I translate between data people and non-data people — one of the most useful skills anyone can have.</p>
+      <div class="expertise-skills">
+        <span class="skill-chip">Executive Storytelling</span>
+        <span class="skill-chip">Data Visualization</span>
+        <span class="skill-chip">Strategic Analysis</span>
+        <span class="skill-chip">Business Intelligence</span>
+      </div>
+    </div>
+
+    <div class="expertise-card reveal">
+      <div class="expertise-icon">🌍</div>
+      <h3>Remote-Native & Global</h3>
+      <p>Fully remote across distributed teams for years. Self-directed, async-fluent, and actively seeking roles in healthtech, EdTech, and international organizations — including Europe-based opportunities.</p>
+      <div class="expertise-skills">
+        <span class="skill-chip">Remote Collaboration</span>
+        <span class="skill-chip">Distributed Teams</span>
+        <span class="skill-chip">Cross-functional</span>
+        <span class="skill-chip">Open to relocation</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <p class="section-label">Selected Work</p>
+
+  <div class="projects-grid">
+
+    <div class="project-card terra reveal">
+      <p class="project-featured">★ Flagship Project · Generative AI + Child Development</p>
+      <h3>HeartPlay</h3>
+      <p class="project-why">Built because I'm a mom, and because two degrees finally converged into something genuinely useful.</p>
+      <p>An AI application that generates developmentally appropriate bonding activities for parents and children, personalized by age, interests, and setting. Full-stack: React frontend, FastAPI and Python backend, OpenAI doing the heavy lifting. This is what happens when healthcare data expertise meets child development research meets generative AI.</p>
+      <div class="project-stack">
+        <span class="stack-tag">React</span>
+        <span class="stack-tag">FastAPI</span>
+        <span class="stack-tag">Python</span>
+        <span class="stack-tag">OpenAI GPT</span>
+        <span class="stack-tag">Tailwind CSS</span>
+        <span class="stack-tag">Vercel · Render</span>
+      </div>
+      <div class="project-links">
+        <a href="https://heart-play-frontend.vercel.app/" target="_blank" class="project-link">Live Demo ↗</a>
+        <a href="https://github.com/EminaToric/HeartPlay" target="_blank" class="project-link secondary">GitHub ↗</a>
+      </div>
+    </div>
+
+    <div class="project-card sage reveal">
+      <p class="project-featured">SQL · Snowflake · Urban Data</p>
+      <h3>Urban Mobility Analysis</h3>
+      <p class="project-why">The same analytical instincts I use on healthcare data, applied to a completely different domain.</p>
+      <p>Deep SQL analysis of NYC Citi Bike trip data in Snowflake — the same tool I use professionally. Examined station peaks, commuter vs. weekend behavioral patterns, and infrastructure gaps. The kind of rigorous analysis that could inform real city planning decisions.</p>
+      <div class="project-stack">
+        <span class="stack-tag">Snowflake SQL</span>
+        <span class="stack-tag">Window Functions</span>
+        <span class="stack-tag">CTEs</span>
+        <span class="stack-tag">Temporal Analysis</span>
+      </div>
+      <div class="project-links">
+        <a href="https://github.com/EminaToric/urban-mobility-sql" target="_blank" class="project-link">GitHub ↗</a>
+      </div>
+    </div>
+
+    <div class="project-card rose reveal">
+      <p class="project-featured">Machine Learning · Deployed</p>
+      <h3>SegmentIQ</h3>
+      <p class="project-why">Segmentation is one of the most powerful tools in population health — I wanted to demonstrate I can do it end-to-end.</p>
+      <p>Customer segmentation using clustering algorithms to group people by behavioral patterns, not just demographics. Deployed as a Gradio app on Hugging Face — live, interactive, fully explainable from the math all the way up to the business insight.</p>
+      <div class="project-stack">
+        <span class="stack-tag">Python</span>
+        <span class="stack-tag">Scikit-learn</span>
+        <span class="stack-tag">K-Means</span>
+        <span class="stack-tag">Gradio</span>
+        <span class="stack-tag">Hugging Face</span>
+      </div>
+      <div class="project-links">
+        <a href="https://huggingface.co/spaces/EmiTor/segmentiq" target="_blank" class="project-link">Live Demo ↗</a>
+        <a href="https://github.com/EminaToric/segmentiq" target="_blank" class="project-link secondary">GitHub ↗</a>
+      </div>
+    </div>
+
+    <div class="project-card sand reveal">
+      <p class="project-featured">Analytics Dashboard · Python</p>
+      <h3>Sales Analytics Dashboard</h3>
+      <p class="project-why">An example of how I make data accessible to people who aren't analysts — which is most of the people who need it most.</p>
+      <p>Interactive Streamlit dashboard exploring sales trends and revenue patterns from UK retail data. Clean, fast, and built to actually be used. A demonstration of the design sensibility I bring to business intelligence work.</p>
+      <div class="project-stack">
+        <span class="stack-tag">Python</span>
+        <span class="stack-tag">Streamlit</span>
+        <span class="stack-tag">Pandas</span>
+        <span class="stack-tag">Data Visualization</span>
+      </div>
+      <div class="project-links">
+        <a href="https://salesanalytics-et.streamlit.app/" target="_blank" class="project-link">Live Demo ↗</a>
+        <a href="https://github.com/EminaToric/sales-analytics" target="_blank" class="project-link secondary">GitHub ↗</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <p class="section-label">Experience</p>
+
+  <div class="experience-list">
+
+    <div class="exp-item reveal">
+      <div class="exp-meta">
+        <p class="exp-period">2021 — Present</p>
+        <p class="exp-company">UnitedHealth Group</p>
+      </div>
+      <div class="exp-content">
+        <h3>Economics Data Consultant</h3>
+        <p>One of the largest health insurers in the world. Working with large-scale Medicare and Medicaid datasets to surface cost drivers, program improvement opportunities, and strategic insights that affect millions of members.</p>
+        <div class="exp-highlights">
+          <span class="exp-highlight">Medicare and Medicaid data analysis to identify cost drivers and program improvement opportunities at population scale</span>
+          <span class="exp-highlight">Translating complex economic and clinical data into clear, actionable narratives for senior stakeholders</span>
+          <span class="exp-highlight">Integrating AI and machine learning methods into analytical workflows to go further and faster than traditional approaches</span>
+          <span class="exp-highlight">Fully remote across distributed teams — proven ability to deliver complex work without oversight</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="exp-item reveal">
+      <div class="exp-meta">
+        <p class="exp-period">2013 — 2021</p>
+        <p class="exp-company">Humana</p>
+      </div>
+      <div class="exp-content">
+        <h3>Data Consultant → Technology Analyst → Data Analyst</h3>
+        <p>Nearly a decade of professional growth inside one of America's largest health insurers. Grew from data analyst through technology analyst into data consultant — building deep, layered expertise in how healthcare data works at the operational, clinical, and strategic levels.</p>
+        <div class="exp-highlights">
+          <span class="exp-highlight">Built analytical frameworks to track health outcomes and program performance across large member populations</span>
+          <span class="exp-highlight">Bridged the data and IT worlds as a Technology Analyst, developing a richer understanding of end-to-end data systems</span>
+          <span class="exp-highlight">Presented findings to audiences at every organizational level — from analysts to C-suite</span>
+          <span class="exp-highlight">Developed the translator skill: making data legible to people who need it most but understand it least</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="edu-left reveal">
+    <p class="section-label">Education</p>
+    <div class="edu-grid">
+      <div class="edu-card">
+        <h4>MS, Computer Science</h4>
+        <p class="edu-school">Georgia Southwestern State University · 2025</p>
+        <p class="edu-note">Generative AI, machine learning, full-stack development</p>
+      </div>
+      <div class="edu-card">
+        <h4>MS, Child & Human Development</h4>
+        <p class="edu-school">Arizona State University</p>
+        <p class="edu-note">The degree that makes this profile genuinely unusual — and unusually valuable in EdTech, family health, and human-centered AI</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="edu-right reveal">
+    <p class="section-label">Certifications</p>
+    <div class="cert-grid">
+      <div class="cert-item">
+        <span class="cert-icon">🎓</span>
+        <div>
+          <h5>Generative AI with Large Language Models</h5>
+          <p>DeepLearning.AI · Issued July 2025</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- OPEN TO -->
+<section id="open">
+  <div>
+    <p class="section-label">Open To</p>
+    <h2 class="open-headline">Roles where data,<br>AI, and <em>human outcomes</em><br>come together.</h2>
+    <p class="open-desc">I'm looking for senior individual contributor or consulting roles in healthtech, digital health, EdTech, and international organizations. Remote-native. Open to relocation in Europe (Spain, Portugal, Netherlands). Available for contract and full-time conversations.</p>
+  </div>
+
+  <div class="open-right">
+    <div class="open-cards">
+      <div class="open-card">
+        <h4>Healthtech & Digital Health</h4>
+        <p>Senior analytics, AI/ML, or consulting roles at companies building meaningful health technology</p>
+      </div>
+      <div class="open-card">
+        <h4>EdTech & Learning Analytics</h4>
+        <p>Data and AI roles where the child development background is the differentiator, not the footnote</p>
+      </div>
+      <div class="open-card">
+        <h4>International Organizations</h4>
+        <p>UNICEF, WHO, World Bank, and similar — data for human development at global scale</p>
+      </div>
+      <div class="open-card">
+        <h4>Remote · Europe-Based</h4>
+        <p>Open to roles that are remote-first or based in Spain, Portugal, or the Netherlands</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <h2 class="contact-headline">Let's build something<br><em>worth building.</em></h2>
+  <p class="contact-sub">If you're working on something at the intersection of data, AI, and real human outcomes — I'd genuinely love to hear about it.</p>
+  <div class="contact-links">
+    <a href="https://linkedin.com/in/emina-toric-msc" target="_blank" class="contact-link">LinkedIn ↗</a>
+    <a href="https://github.com/EminaToric" target="_blank" class="contact-link">GitHub ↗</a>
+    <a href="https://heart-play-frontend.vercel.app/" target="_blank" class="contact-link">Try HeartPlay ↗</a>
+  </div>
+</section>
+
+<footer>
+  <p>© 2025 Emina Toric · Data & AI for Human Outcomes</p>
+  <p>Open to new opportunities</p>
+</footer>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 60);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
